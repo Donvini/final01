@@ -5,4 +5,5 @@ package final01;
  * @version 1.0
  */
 public class Edge {
+
 }

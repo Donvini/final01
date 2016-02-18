@@ -22,6 +22,8 @@ public final class Commandline {
 
     public static final String QUIT = "quit";
 
+    public enum criterion {TIME, ROUTE, OPTIMAL, ALL}
+
 
     private Commandline() {
     }
@@ -36,6 +38,7 @@ public final class Commandline {
                String[] parts = commands.split("\\s", 5);
                switch (parts[0]) {
                    case SEARCH:
+                       graph.search(graph.getVertex()parts[1], parts[2], parts[3]);
                        break;
                    case REMOVE:
                        break;
