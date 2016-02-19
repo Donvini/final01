@@ -1,4 +1,4 @@
-package final01;
+package final01.Graph;
 
 /**
  * Diese Klasse representiert eine Stadt in unserem Navigationssystem.

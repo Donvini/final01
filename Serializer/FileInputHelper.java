@@ -1,4 +1,4 @@
-package final01;
+package final01.Serializer;
 
 import edu.kit.informatik.Terminal;
 

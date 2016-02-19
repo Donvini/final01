@@ -1,4 +1,4 @@
-package final01;
+package final01.Commandline;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,6 @@
-package final01;
+package final01.Commandline;
+
+import final01.Graph.Graph;
 
 /**
  * @author Vincenzo Pace | KIT
@@ -38,7 +40,6 @@ public final class Commandline {
                String[] parts = commands.split("\\s", 5);
                switch (parts[0]) {
                    case SEARCH:
-                       graph.search(graph.getVertex()parts[1], parts[2], parts[3]);
                        break;
                    case REMOVE:
                        break;
