@@ -6,24 +6,50 @@ package final01.Serializer;
  */
 public class Serializer {
     /**
-     * Regex matching a valid word and an arbitrary amount of whitespace between
-     * html tags or inside a comment.
+     *
      */
-    private static final String REGEX_WORD_WITH_WITHESPACE = "(?:(?:[A-Za-z0-9_-]+)|(?:\\s+))+";
-
+    private static final String REGEX_EDGE = "(?:(?:[A-Za-z0-9_-]+)|(?:\\s+))+";
     /**
-     * Regex matching a valid word between html tags or inside a comment.
+     *
      */
-    private static final String REGEX_WORD = "[A-Za-z0-9_-]+";
+    private static final String REGEX_CITY = "[A-Za-z-]+";
 
-    /**
-     * Regex matching a valid tag name.
-     */
-    private static final String REGEX_TAG_IDENTIFIER = "[a-z0-9]+";
-
-    private Serializer(String path) {
-        String[] file = FileInputHelper .read(path);
-
+    public String[] cities(String[] worldMap) {
+        String[] cities = new String[worldMap.length];
+        int i = 0;
+        while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length && validate(worldMap)) {
+            cities[i] = worldMap[i];
+            i++;
+        }
+        return cities;
     }
 
+    public boolean validate(String[] worldMap) {
+        int i = 0;
+        while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
+            if(!worldMap[i].matches(REGEX_CITY))
+                return false;
+            i++;
+        }
+        i++;
+        while (i < worldMap.length) {
+            if(!worldMap[i].matches(REGEX_EDGE))
+                return false;
+            i++;
+        }
+        return true;
+    }
+
+    public String[] connections(String[] worldMap) {
+        String[] connections = new String[worldMap.length];
+        int i;
+        int j = 0;
+        for (i = 0; i < worldMap.length; i++) {
+            if (worldMap[i].equals("--")) {
+                connections[j] = worldMap[i];
+                j++;
+            }
+        }
+        return connections;
+    }
 }

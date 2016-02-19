@@ -1,6 +1,5 @@
 package final01.Graph;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,7 +8,11 @@ import java.util.List;
  * @version 1.0
  */
 public class GraphList extends Graph{
-    HashMap<Vertex, ArrayList<Edge>> graph = new HashMap<>();
+
+    HashMap<Vertex, List<Edge>> graph = new HashMap<>();
+
+
+    public GraphList(String[] initialWorldMap) {}
 
     @Override
     public Edge getEdge(Vertex v, Vertex w) {
@@ -26,7 +29,7 @@ public class GraphList extends Graph{
         return new Vertex[0];
     }
 
-    public HashMap<Vertex, ArrayList<Edge>> getGraph() {
+    public HashMap<Vertex, List<Edge>> getGraph() {
         return graph;
     }
 

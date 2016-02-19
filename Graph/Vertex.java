@@ -1,5 +1,7 @@
 package final01.Graph;
 
+import java.util.List;
+
 /**
  * Diese Klasse representiert eine Stadt in unserem Navigationssystem.
  *
@@ -13,6 +15,8 @@ public class Vertex {
 
     // bool für Tiefensuche
     private boolean isVisited;
+
+    private List<Vertex> neighbours;
 
     public Vertex(String name) {
         this.name = name;
