@@ -16,6 +16,7 @@ public class Vertex {
     // bool für Tiefensuche
     private boolean isVisited;
 
+    private List<Edge> edges;
     private List<Vertex> neighbours;
 
     public Vertex(String name) {
@@ -32,5 +33,10 @@ public class Vertex {
 
     public boolean isVisited() {
         return isVisited;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

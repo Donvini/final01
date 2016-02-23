@@ -7,12 +7,17 @@ import java.util.List;
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
-public class GraphList extends Graph{
+public class MapGraph extends Graph{
 
     HashMap<Vertex, List<Edge>> graph = new HashMap<>();
+    List<Vertex> vertex;
 
 
-    public GraphList(String[] initialWorldMap) {}
+    public MapGraph(String[] cities, String[] connection) {
+        for (String city : cities) {
+            this.vertex.add(new Vertex(city));
+        }
+    }
 
     @Override
     public Edge getEdge(Vertex v, Vertex w) {
