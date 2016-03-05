@@ -1,7 +1,10 @@
 package final01.Serializer;
 
-import edu.kit.informatik.Terminal;
+import final01.Commandline.Terminal;
 import final01.Exceptions.FileSyntaxException;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Vincenzo Pace | KIT
@@ -11,7 +14,7 @@ public class Serializer {
     /**
      *
      */
-    private static final String REGEX_EDGE = "(?:(?:[A-Za-z0-9_-]+)|(?:\\s+))+";
+    private static final String REGEX_EDGE = "[A-Za-z-]+;[A-Za-z-]+;[0-9]+;[0-9]+";
     /**
      *
      */
@@ -27,6 +30,18 @@ public class Serializer {
         }
         return cities;
     }
+
+    //TODO : check whether a string occurs twice
+    private static boolean duplicates(final String[] worldMap) {
+        Set<String> lump = new HashSet<String>();
+        for (String entry : worldMap) {
+            if (lump.contains(entry))
+                return true;
+            lump.add(entry);
+        }
+        return false;
+    }
+
 
     private static boolean validate(String[] worldMap) {
         int i = 0;
@@ -46,8 +61,11 @@ public class Serializer {
             Terminal.printLine("Error, " + e.getMessage());
             System.exit(1);
         }
-        return true;
+        return !duplicates(worldMap);
     }
+
+    //TODO : split connections in parts, separated by semicolon
+
 
     public static String[] connections(String[] worldMap) {
         String[] connections = new String[worldMap.length];
