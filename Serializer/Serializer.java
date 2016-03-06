@@ -20,7 +20,12 @@ public class Serializer {
      */
     private static final String REGEX_CITY = "[A-Za-z-]+";
 
-    public static String[] cities(String[] worldMap){
+    private static String[] startCities;
+    private static String[] destinationCities;
+    private static int[] distance;
+    private static int[] time;
+
+    private static String[] cities(String[] worldMap) throws FileSyntaxException {
         String[] cities = new String[worldMap.length];
         int i = 0;
         if (validate(worldMap))
@@ -66,8 +71,28 @@ public class Serializer {
 
     //TODO : split connections in parts, separated by semicolon
 
+    private static void split(String[] connections) {
+        int i = 0;
+        startCities = new String[connections.length];
+        destinationCities = new String[connections.length];
+        distance = new int[connections.length];
+        time = new int[connections.length];
+        String[][] parts = new String[4][connections.length];
+        while (i < 4) {
+            for (int j = 0; j < connections.length; j = j + 4) {
+                parts[i] = connections[j].split(";", 1);
+            }
+            i++;
+        }
+        for (int j = 0; j < connections.length; j++) {
+            startCities[j] = parts[0][j];
+            destinationCities[j] = parts[1][j];
+            distance[j] = Integer.parseInt(parts[2][j]);
+            time[j] = Integer.parseInt(parts[3][j]);
+        }
+    }
 
-    public static String[] connections(String[] worldMap) {
+    private static String[] connections(String[] worldMap) {
         String[] connections = new String[worldMap.length];
         int i;
         int j = 0;
@@ -79,4 +104,5 @@ public class Serializer {
         }
         return connections;
     }
+
 }

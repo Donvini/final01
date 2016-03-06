@@ -8,23 +8,23 @@ import final01.Graph.Graph;
  */
 public final class Commandline {
 
-    public static final String SEARCH = "search";
+    private static final String SEARCH = "search";
 
-    public static final String ROUTE = "route";
+    private static final String ROUTE = "route";
 
-    public static final String REMOVE = "remove";
+    private static final String REMOVE = "remove";
 
-    public static final String INSERT = "insert";
+    private static final String INSERT = "insert";
 
-    public static final String INFO = "info";
+    private static final String INFO = "info";
 
-    public static final String NODES = "nodes";
+    private static final String NODES = "nodes";
 
-    public static final String VERTICES = "vertices";
+    private static final String VERTICES = "vertices";
 
-    public static final String QUIT = "quit";
+    private static final String QUIT = "quit";
 
-    public enum criterion {TIME, ROUTE, OPTIMAL, ALL}
+    private enum criterion {TIME, ROUTE, OPTIMAL, ALL}
 
 
     private Commandline() {
@@ -67,7 +67,7 @@ public final class Commandline {
     /**
      * Diese Methode beendet das Programm.
      */
-    public static void quit() {
+    private static void quit() {
         System.exit(0);
     }
 }
