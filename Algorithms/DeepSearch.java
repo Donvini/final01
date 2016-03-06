@@ -1,6 +1,6 @@
-package final01.Algorithms;
+package final01.algorithms;
 
-import final01.Graph.Vertex;
+import final01.graph.Vertex;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,6 +1,6 @@
-package final01.Commandline;
+package final01.commandline;
 
-import final01.Graph.Graph;
+import final01.graph.Graph;
 
 /**
  * @author Vincenzo Pace | KIT

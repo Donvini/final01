@@ -1,4 +1,4 @@
-package final01.Commandline;
+package final01.commandline;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,7 +53,7 @@ public final class Terminal {
             return in.readLine();
         } catch (IOException e) {
             /*
-             * rethrow unchecked (!) exception to prevent students from being forced to use Exceptions before they have
+             * rethrow unchecked (!) exception to prevent students from being forced to use exceptions before they have
              * been introduced in the lecture.
              */
             throw new RuntimeException(e);

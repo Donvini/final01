@@ -1,16 +1,16 @@
 package final01;
 
-import final01.Commandline.Commandline;
-import final01.Commandline.Terminal;
-import final01.Graph.MapGraph;
-import final01.Serializer.FileInputHelper;
-import final01.Serializer.Serializer;
+import final01.commandline.Commandline;
+import final01.commandline.Terminal;
+import final01.serializer.FileInputHelper;
+import final01.serializer.Serializer;
 
 /**
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
 public class MainClass {
+
     private MainClass() {
 
     }

@@ -1,4 +1,4 @@
-package final01.Exceptions;
+package final01.exceptions;
 
 /**
  * @author Vincenzo Pace | KIT

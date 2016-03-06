@@ -1,7 +1,7 @@
-package final01.Serializer;
+package final01.serializer;
 
 
-import final01.Commandline.Terminal;
+import final01.commandline.Terminal;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

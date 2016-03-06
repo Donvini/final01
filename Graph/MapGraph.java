@@ -1,4 +1,4 @@
-package final01.Graph;
+package final01.graph;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,9 +1,9 @@
-package final01.Serializer;
+package final01.serializer;
 
-import final01.Commandline.Terminal;
-import final01.Exceptions.FileSyntaxException;
-import final01.Graph.MapGraph;
-import final01.Graph.Vertex;
+import final01.commandline.Terminal;
+import final01.exceptions.FileSyntaxException;
+import final01.graph.MapGraph;
+import final01.graph.Vertex;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,9 +14,6 @@ import java.util.Set;
  */
 public class Serializer {
 
-    private Serializer() {
-
-    }
     /**
      *
      */
@@ -25,26 +22,12 @@ public class Serializer {
      *
      */
     private static final String REGEX_CITY = "[A-Za-z-]+";
-
     private static String[] startCities;
     private static String[] destinationCities;
     private static int[] distance;
     private static int[] time;
+    private Serializer() {
 
-    public static String[] getStartCities() {
-        return startCities;
-    }
-
-    public static String[] getDestinationCities() {
-        return destinationCities;
-    }
-
-    public static int[] getDistance() {
-        return distance;
-    }
-
-    public static int[] getTime() {
-        return time;
     }
 
     private static String[] cities(String[] worldMap) {
@@ -54,7 +37,7 @@ public class Serializer {
             while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
                 cities[i] = worldMap[i];
                 i++;
-        }
+            }
         return cities;
     }
 
@@ -68,7 +51,7 @@ public class Serializer {
         return false;
     }
 
-
+    // TODO: Mehrfachkanten überprüfen!
     private static boolean validate(String[] worldMap) {
         int i = 0;
         try {
@@ -131,6 +114,7 @@ public class Serializer {
         split(connections(worldmap));
         return new MapGraph(cities(worldmap), startVertices(startCities), destinationVertices(destinationCities), distance, time);
     }
+
     private static String[] connections(String[] worldMap) {
         String[] connections = new String[worldMap.length];
         int i;
@@ -143,5 +127,4 @@ public class Serializer {
         }
         return connections;
     }
-
 }
