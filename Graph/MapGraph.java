@@ -13,7 +13,7 @@ public class MapGraph extends Graph{
     List<Vertex> vertices;
     List<Edge> edges;
 
-    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, double[] km, double[] time) {
+    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, int[] km, int[] time) {
         for (String city : cities) {
             this.vertices.add(new Vertex(city));
         }

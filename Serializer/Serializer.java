@@ -2,6 +2,8 @@ package final01.Serializer;
 
 import final01.Commandline.Terminal;
 import final01.Exceptions.FileSyntaxException;
+import final01.Graph.MapGraph;
+import final01.Graph.Vertex;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +13,10 @@ import java.util.Set;
  * @version 1.0
  */
 public class Serializer {
+
+    private Serializer() {
+
+    }
     /**
      *
      */
@@ -25,7 +31,23 @@ public class Serializer {
     private static int[] distance;
     private static int[] time;
 
-    private static String[] cities(String[] worldMap) throws FileSyntaxException {
+    public static String[] getStartCities() {
+        return startCities;
+    }
+
+    public static String[] getDestinationCities() {
+        return destinationCities;
+    }
+
+    public static int[] getDistance() {
+        return distance;
+    }
+
+    public static int[] getTime() {
+        return time;
+    }
+
+    private static String[] cities(String[] worldMap) {
         String[] cities = new String[worldMap.length];
         int i = 0;
         if (validate(worldMap))
@@ -36,7 +58,6 @@ public class Serializer {
         return cities;
     }
 
-    //TODO : check whether a string occurs twice
     private static boolean duplicates(final String[] worldMap) {
         Set<String> lump = new HashSet<String>();
         for (String entry : worldMap) {
@@ -69,8 +90,6 @@ public class Serializer {
         return !duplicates(worldMap);
     }
 
-    //TODO : split connections in parts, separated by semicolon
-
     private static void split(String[] connections) {
         int i = 0;
         startCities = new String[connections.length];
@@ -92,6 +111,26 @@ public class Serializer {
         }
     }
 
+    private static Vertex[] startVertices(String[] cities) {
+        Vertex[] startVertices = new Vertex[cities.length];
+        for (int i = 0; i < cities.length; i++) {
+            startVertices[i] = new Vertex(cities[i]);
+        }
+        return startVertices;
+    }
+
+    private static Vertex[] destinationVertices(String[] cities) {
+        Vertex[] destVertices = new Vertex[cities.length];
+        for (int i = 0; i < cities.length; i++) {
+            destVertices[i] = new Vertex(cities[i]);
+        }
+        return destVertices;
+    }
+
+    public static MapGraph initializeGraph(String[] worldmap) {
+        split(connections(worldmap));
+        return new MapGraph(cities(worldmap), startVertices(startCities), destinationVertices(destinationCities), distance, time);
+    }
     private static String[] connections(String[] worldMap) {
         String[] connections = new String[worldMap.length];
         int i;
