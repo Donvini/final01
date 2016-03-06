@@ -16,6 +16,7 @@ public class Vertex {
     // bool für Tiefensuche
     private boolean isVisited;
 
+    // TODO: Nachbarliste einbauen
     private List<Edge> edges;
     private List<Vertex> neighbours;
 

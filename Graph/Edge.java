@@ -8,10 +8,10 @@ public class Edge {
 
     private Vertex startNode;
     private Vertex endNode;
-    private double distance;
-    private double time;
+    private int distance;
+    private int time;
 
-    public Edge(Vertex start, Vertex end, double distance, double time) {
+    public Edge(Vertex start, Vertex end, int distance, int time) {
         this.startNode = start;
         this.endNode = end;
         this.distance = distance;

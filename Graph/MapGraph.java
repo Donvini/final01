@@ -9,13 +9,23 @@ import java.util.List;
  */
 public class MapGraph extends Graph{
 
-    HashMap<Vertex, List<Edge>> graph = new HashMap<>();
-    List<Vertex> vertex;
+    HashMap<Vertex, List<Edge>> world = new HashMap<>();
+    List<Vertex> vertices;
+    List<Edge> edges;
 
-
-    public MapGraph(String[] cities, String[] connection) {
+    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, double[] km, double[] time) {
         for (String city : cities) {
-            this.vertex.add(new Vertex(city));
+            this.vertices.add(new Vertex(city));
+        }
+        for(int i = 0; i < km.length; i++) {
+            this.edges.add(new Edge( startCities[i], destinationCities[i], km[i], time[i]));
+        }
+        for (Vertex element : vertices) {
+            for (int j = 0; j < vertices.size(); j++) {
+                if (startCities[j].getName().equals(element.getName())
+                        || destinationCities[j].getName().equals(element.getName()))
+                    this.world.put(element, this.edges);
+            }
         }
     }
 
@@ -34,8 +44,8 @@ public class MapGraph extends Graph{
         return new Vertex[0];
     }
 
-    public HashMap<Vertex, List<Edge>> getGraph() {
-        return graph;
+    public HashMap<Vertex, List<Edge>> getWorld() {
+        return world;
     }
 
     @Override
