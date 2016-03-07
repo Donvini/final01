@@ -17,4 +17,10 @@ public class Edge {
         this.distance = distance;
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return this.startNode.toString() + ";" + this.endNode.toString() + ";"
+                + this.distance + ";" + this.time;
+    }
 }

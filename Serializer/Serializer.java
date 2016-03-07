@@ -43,15 +43,12 @@ public class Serializer {
     }
 
     // TODO: Mehrfachkanten + Schlingen überprüfen!
-    private static boolean checkForMulti(final String[] worldmap) {
+    private static boolean checkForMulti(final String[] worldmap) throws FileSyntaxException {
         split(connections(worldmap));
         for(int i = 0; i < worldmap.length; i++) {
             // Schlingen überprüfen
-            if (startCities[i].equals(destinationCities[i]))
-                return true;
-            for (int j = i + 1; j < worldmap.length; j++) {
-                if (startCities[i].equals(destinationCities[j]))
-                    return true;
+            if (startCities[i].equals(destinationCities[i])) {
+                throw new FileSyntaxException("Schlinge gefunden!");
             }
         }
         return false;
@@ -70,11 +67,12 @@ public class Serializer {
                     throw new FileSyntaxException("Invalid edge entry found.");
                 i++;
             }
+            return !duplicates(worldMap) && checkForMulti(worldMap);
         } catch (FileSyntaxException e) {
             Terminal.printLine("Error, " + e.getMessage());
             System.exit(1);
         }
-        return !duplicates(worldMap);
+        return false;
     }
 
     private static void split(String[] connections) {
@@ -83,18 +81,18 @@ public class Serializer {
         destinationCities = new String[connections.length];
         distance = new int[connections.length];
         time = new int[connections.length];
-        String[][] parts = new String[4][connections.length];
-        while (i < 4) {
-            for (int j = 0; j < connections.length; j = j + 4) {
-                parts[i] = connections[j].split(";", 1);
+        String[][] parts = new String[connections.length][4];
+        while (i < connections.length) {
+            for (int j = 0; j < connections.length; j++) {
+                parts[i] = connections[j].split(";");
+                i++;
             }
-            i++;
         }
         for (int j = 0; j < connections.length; j++) {
-            startCities[j] = parts[0][j];
-            destinationCities[j] = parts[1][j];
-            distance[j] = Integer.parseInt(parts[2][j]);
-            time[j] = Integer.parseInt(parts[3][j]);
+            startCities[j] = parts[j][0];
+            destinationCities[j] = parts[j][1];
+            distance[j] = Integer.parseInt(parts[j][2]);
+            time[j] = Integer.parseInt(parts[j][3]);
         }
     }
 
@@ -120,13 +118,18 @@ public class Serializer {
 
     private static String[] connections(String[] worldMap) {
         int i = cities(worldMap).length + 1;
+        int l = i;
         int j = 0;
         while (i < worldMap.length) {
             i++;
             j++;
         }
+
         String[] connections = new String[j];
-        System.arraycopy(worldMap, 0, connections, 0, j);
+        for (int k = 0; k < j; k++) {
+            connections[k] = worldMap[l];
+            l++;
+        }
         return connections;
         }
 

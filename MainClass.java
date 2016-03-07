@@ -18,7 +18,9 @@ public class MainClass {
         try {
             String path = args[0];
             String[] lines = FileInputHelper.read(path);
-            Commandline.navigationUp(Serializer.initializeGraph(lines));
+            System.out.println(Serializer.validate(lines));
+            //if(Serializer.validate(lines)) {}
+                //Commandline.navigationUp(Serializer.initializeGraph(lines));
         } catch (IllegalArgumentException e) {
             System.exit(1);
         } catch (IndexOutOfBoundsException e) {
