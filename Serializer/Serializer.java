@@ -40,7 +40,6 @@ public class Serializer {
         return false;
     }
 
-    // TODO: Mehrfachkanten + Schlingen überprüfen!
     private static boolean checkForMulti(final String[] worldmap) {
         split(connections(worldmap));
         for(int i = 0; i < startCities.length; i++) {

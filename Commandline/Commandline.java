@@ -1,6 +1,6 @@
 package final01.commandline;
 
-import final01.graph.Graph;
+import final01.graph.MapGraph;
 
 /**
  * @author Vincenzo Pace | KIT
@@ -31,7 +31,7 @@ public final class Commandline {
     }
 
 
-    public static void navigationUp(Graph graph) {
+    public static void navigationUp(MapGraph graph) {
         while (true) {
            try {
                String commands = Terminal.readLine();

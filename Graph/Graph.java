@@ -1,13 +1,13 @@
-package final01.graph;
+/*package final01.graph;
 
 import java.util.List;
 
 /**
  * @author Vincenzo Pace | KIT
  * @version 1.0
- */
+
 public abstract class Graph {
-    private Vertex vertices;
+    private List<Vertex> vertices;
     private int numVertices;
     private int numEdges;
 
@@ -28,3 +28,4 @@ public abstract class Graph {
 
 
 }
+*/
