@@ -43,12 +43,12 @@ public class Serializer {
     }
 
     // TODO: Mehrfachkanten + Schlingen überprüfen!
-    private static boolean checkForMulti(final String[] worldmap) throws FileSyntaxException {
+    private static boolean checkForMulti(final String[] worldmap) {
         split(connections(worldmap));
-        for(int i = 0; i < worldmap.length; i++) {
+        for(int i = 0; i < startCities.length; i++) {
             // Schlingen überprüfen
-            if (startCities[i].equals(destinationCities[i])) {
-                throw new FileSyntaxException("Schlinge gefunden!");
+            if (startCities[i].equalsIgnoreCase(destinationCities[i])) {
+                return true;
             }
         }
         return false;
@@ -67,7 +67,7 @@ public class Serializer {
                     throw new FileSyntaxException("Invalid edge entry found.");
                 i++;
             }
-            return !duplicates(worldMap) && checkForMulti(worldMap);
+            return !duplicates(worldMap) && !checkForMulti(worldMap);
         } catch (FileSyntaxException e) {
             Terminal.printLine("Error, " + e.getMessage());
             System.exit(1);
