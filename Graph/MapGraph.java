@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class MapGraph extends Graph {
 
+    //TODO: überprüfen ob Graph zusammenhängend ist
     HashMap<Vertex, ArrayList<Edge>> world = new HashMap<>();
     private List<Vertex> vertices = new ArrayList<>();
     private List<Edge> edges = new ArrayList<>();
@@ -24,12 +25,13 @@ public class MapGraph extends Graph {
         }
         for (Vertex element : vertices) {
             for (int j = 0; j <= vertices.size(); j++) {
-                if (startCities[j].getName().equals(element.getName()))
-                    element.getEdges().add(new Edge(element, destinationCities[j],
+                if (startCities[j].getName().equals(element.getName())
+                        || destinationCities[j].getName().equals(element.getName())) {
+                    element.getEdges().add(new Edge(startCities[j], destinationCities[j],
                             km[j], time[j]));
-                else if (destinationCities[j].getName().equals(element.getName()))
-                    element.getEdges().add(new Edge(startCities[j], element,
+                    element.getEdges().add(new Edge(destinationCities[j], startCities[j],
                             km[j], time[j]));
+                }
             }
             this.world.put(element, element.getEdges());
         }
