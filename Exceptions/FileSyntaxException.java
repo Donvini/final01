@@ -1,4 +1,4 @@
-package final01.exceptions;
+package navi.exceptions;
 
 import java.io.IOException;
 
@@ -9,6 +9,10 @@ import java.io.IOException;
 public class FileSyntaxException extends IOException {
     static final long serialVersionUID = 123123151123L;
 
+    /**
+     * Konstukor der Exception
+     * @param message die Fehlermeldung
+     */
     public FileSyntaxException(String message) {
         super(message);
     }

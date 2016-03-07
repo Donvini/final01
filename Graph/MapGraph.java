@@ -1,21 +1,39 @@
-package final01.graph;
+package navi.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
+ * Diese klasse stellt die Datenstruktur des Graphen dar.
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
 public class MapGraph extends Graph {
 
+    /**
+     * Hashmap, die jedem Knoten seine zugehörigen Kanten zuordnet. Hauptstruktur.
+     */
     //TODO: überprüfen ob Graph zusammenhängend ist
-    HashMap<Vertex, ArrayList<Edge>> world = new HashMap<>();
+    private HashMap<Vertex, ArrayList<Edge>> world = new HashMap<>();
+    /**
+     * Extra Liste der Knoten um schnellen zugriff zu gewährleisten.
+     */
     private List<Vertex> vertices = new ArrayList<>();
+    /**
+     * Extra Liste der Kanten um Schnellen zugriff zu gewährleisten und einfach zu erweitern.
+     */
     private List<Edge> edges = new ArrayList<>();
 
 
+    /**
+     * Konstruktor der Klasse.
+     * @param cities Die Namen und Anzahl der Knoten die erstellt werden müssen.
+     * @param startCities alle Startknoten für die Kanten
+     * @param destinationCities alle Zielknoten für die Kanten
+     * @param km alle Distanzen für die Kanten
+     * @param time alle Zeitabstände für die Kanten
+     */
     public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, int[] km, int[] time) {
         for (String city : cities) {
             this.vertices.add(new Vertex(city));
@@ -52,6 +70,10 @@ public class MapGraph extends Graph {
         return new Vertex[0];
     }
 
+    /**
+     *
+     * @return die Welt mit allen Städten und Verbindungen.
+     */
     public HashMap<Vertex, ArrayList<Edge>> getWorld() {
         return world;
     }

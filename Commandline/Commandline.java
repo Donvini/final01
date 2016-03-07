@@ -1,37 +1,43 @@
-package final01.commandline;
+package navi.commandline;
 
-import final01.graph.Graph;
-import final01.graph.MapGraph;
+import navi.graph.Graph;
 
 /**
+ * Die Klasse, die für die Nutzereingaben benutzt wird
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
 public final class Commandline {
 
+    /**
+     * Die zugehörigen Strings zu den akzeptierten Befehlen
+     */
     private static final String SEARCH = "search";
-
     private static final String ROUTE = "route";
-
     private static final String REMOVE = "remove";
-
     private static final String INSERT = "insert";
-
     private static final String INFO = "info";
-
     private static final String NODES = "nodes";
-
     private static final String VERTICES = "vertices";
-
     private static final String QUIT = "quit";
 
-    private enum criterion {TIME, ROUTE, OPTIMAL, ALL}
+    /**
+     * Die Kriterien, nach denen gesucht werden kann.
+     */
+    private enum criterion { TIME, ROUTE, OPTIMAL, ALL}
 
 
+    /**
+     * Privater Konstruktor um Instantiierung zu verhindern.
+     */
     private Commandline() {
     }
 
 
+    /**
+     * Hauptmethode der Klasse um die Nutzereingaben entgegenzunehmen
+     * @param graph auf diesem Graph sollen alle operationen ausfgeführt werden
+     */
     public static void navigationUp(Graph graph) {
         while (true) {
            try {

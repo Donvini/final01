@@ -1,10 +1,11 @@
-package final01.graph;
+package navi.graph;
 
 import java.util.List;
 
 /**
  * @author Vincenzo Pace | KIT
  * @version 1.0
+ * abstrakte Klasse um festzulegen was der Graph alles können soll
 */
 public abstract class Graph {
 

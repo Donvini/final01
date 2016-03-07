@@ -1,6 +1,6 @@
-package final01.algorithms;
+package navi.algorithms;
 
-import final01.graph.Vertex;
+import navi.graph.Vertex;
 
 import java.util.HashMap;
 import java.util.HashSet;

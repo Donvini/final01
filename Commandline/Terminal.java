@@ -1,4 +1,4 @@
-package final01.commandline;
+package navi.commandline;
 
 import java.io.BufferedReader;
 import java.io.IOException;
