@@ -30,16 +30,7 @@ public class Serializer {
 
     }
 
-    private static String[] cities(String[] worldMap) {
-        String[] cities = new String[worldMap.length];
-        int i = 0;
-        if (validate(worldMap))
-            while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
-                cities[i] = worldMap[i];
-                i++;
-            }
-        return cities;
-    }
+
 
     private static boolean duplicates(final String[] worldMap) {
         Set<String> lump = new HashSet<String>();
@@ -51,8 +42,21 @@ public class Serializer {
         return false;
     }
 
-    // TODO: Mehrfachkanten überprüfen!
-    private static boolean validate(String[] worldMap) {
+    // TODO: Mehrfachkanten + Schlingen überprüfen!
+    private static boolean checkForMulti(final String[] worldmap) {
+        split(connections(worldmap));
+        for(int i = 0; i < worldmap.length; i++) {
+            // Schlingen überprüfen
+            if (startCities[i].equals(destinationCities[i]))
+                return true;
+            for (int j = i + 1; j < worldmap.length; j++) {
+                if (startCities[i].equals(destinationCities[j]))
+                    return true;
+            }
+        }
+        return false;
+    }
+    public static boolean validate(String[] worldMap) {
         int i = 0;
         try {
             while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
@@ -111,20 +115,28 @@ public class Serializer {
     }
 
     public static MapGraph initializeGraph(String[] worldmap) {
-        split(connections(worldmap));
         return new MapGraph(cities(worldmap), startVertices(startCities), destinationVertices(destinationCities), distance, time);
     }
 
     private static String[] connections(String[] worldMap) {
-        String[] connections = new String[worldMap.length];
-        int i;
+        int i = cities(worldMap).length + 1;
         int j = 0;
-        for (i = 0; i < worldMap.length; i++) {
-            if (worldMap[i].equals("--")) {
-                connections[j] = worldMap[i];
-                j++;
-            }
+        while (i < worldMap.length) {
+            i++;
+            j++;
         }
+        String[] connections = new String[j];
+        System.arraycopy(worldMap, 0, connections, 0, j);
         return connections;
+        }
+
+    private static String[] cities(String[] worldMap) {
+        int i = 0;
+            while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
+                i++;
+            }
+        String[] cities = new String[i];
+        System.arraycopy(worldMap, 0, cities, 0, i);
+        return cities;
     }
 }
