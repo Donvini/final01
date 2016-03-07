@@ -76,18 +76,14 @@ public class Serializer {
     }
 
     private static void split(String[] connections) {
-        int i = 0;
         startCities = new String[connections.length];
         destinationCities = new String[connections.length];
         distance = new int[connections.length];
         time = new int[connections.length];
         String[][] parts = new String[connections.length][4];
-        while (i < connections.length) {
             for (int j = 0; j < connections.length; j++) {
-                parts[i] = connections[j].split(";");
-                i++;
+                parts[j] = connections[j].split(";");
             }
-        }
         for (int j = 0; j < connections.length; j++) {
             startCities[j] = parts[j][0];
             destinationCities[j] = parts[j][1];
