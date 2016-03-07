@@ -119,12 +119,8 @@ public class Serializer {
             i++;
             j++;
         }
-
         String[] connections = new String[j];
-        for (int k = 0; k < j; k++) {
-            connections[k] = worldMap[l];
-            l++;
-        }
+        System.arraycopy(worldMap, l, connections, 0, j);
         return connections;
         }
 
