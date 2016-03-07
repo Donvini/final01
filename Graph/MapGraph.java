@@ -23,11 +23,15 @@ public class MapGraph extends Graph {
             this.edges.add(new Edge(startCities[i], destinationCities[i], km[i], time[i]));
         }
         for (Vertex element : vertices) {
-            for (int j = 0; j < vertices.size(); j++) {
-                if (startCities[j].getName().equals(element.getName())
-                        || destinationCities[j].getName().equals(element.getName()))
-                    this.world.put(element, element.getEdges());
+            for (int j = 0; j <= vertices.size(); j++) {
+                if (startCities[j].getName().equals(element.getName()))
+                    element.getEdges().add(new Edge(element, destinationCities[j],
+                            km[j], time[j]));
+                else if (destinationCities[j].getName().equals(element.getName()))
+                    element.getEdges().add(new Edge(startCities[j], element,
+                            km[j], time[j]));
             }
+            this.world.put(element, element.getEdges());
         }
     }
 

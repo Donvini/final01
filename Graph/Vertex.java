@@ -26,8 +26,8 @@ public class Vertex {
     }
 
     // TODO: Nachbarliste einbauen
-    private ArrayList<Edge> edges;
-    private ArrayList<Vertex> neighbours;
+    private ArrayList<Edge> edges = new ArrayList<>();
+    private ArrayList<Vertex> neighbours = new ArrayList<>();
 
     public Vertex(String name) {
         this.name = name;
