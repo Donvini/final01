@@ -30,8 +30,10 @@ public class Serializer {
 
     }
 
+
+
     private static boolean duplicates(final String[] worldMap) {
-        Set<String> lump = new HashSet<>();
+        Set<String> lump = new HashSet<String>();
         for (String entry : worldMap) {
             if (lump.contains(entry))
                 return true;
@@ -47,22 +49,6 @@ public class Serializer {
             if (startCities[i].equalsIgnoreCase(destinationCities[i])) {
                 return true;
             }
-        }
-        for (int j = 0; j < startCities.length; j++) {
-            for (int k = j + 1; k < startCities.length; k++) {
-                if(startCities[j].equalsIgnoreCase(destinationCities[k]))
-                    return true;
-            }
-        }
-        String[] connectedCities = new String[startCities.length];
-        for (int l = 0; l < connectedCities.length; l++) {
-            connectedCities[l] = startCities[l] + destinationCities[l];
-        }
-        Set<String> lump = new HashSet<>();
-        for (String entry : connectedCities) {
-            if (lump.contains(entry))
-                return true;
-            lump.add(entry);
         }
         return false;
     }
@@ -133,6 +119,7 @@ public class Serializer {
             i++;
             j++;
         }
+
         String[] connections = new String[j];
         for (int k = 0; k < j; k++) {
             connections[k] = worldMap[l];
