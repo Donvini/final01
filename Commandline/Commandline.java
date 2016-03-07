@@ -1,5 +1,6 @@
 package final01.commandline;
 
+import final01.graph.Graph;
 import final01.graph.MapGraph;
 
 /**
@@ -31,7 +32,7 @@ public final class Commandline {
     }
 
 
-    public static void navigationUp(MapGraph graph) {
+    public static void navigationUp(Graph graph) {
         while (true) {
            try {
                String commands = Terminal.readLine();

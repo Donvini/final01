@@ -1,5 +1,6 @@
 package final01.graph;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +17,17 @@ public class Vertex {
     // bool für Tiefensuche
     private boolean isVisited;
 
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+
+    public ArrayList<Vertex> getNeighbours() {
+        return neighbours;
+    }
+
     // TODO: Nachbarliste einbauen
-    private List<Edge> edges;
-    private List<Vertex> neighbours;
+    private ArrayList<Edge> edges;
+    private ArrayList<Vertex> neighbours;
 
     public Vertex(String name) {
         this.name = name;

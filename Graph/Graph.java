@@ -1,15 +1,12 @@
-/*package final01.graph;
+package final01.graph;
 
 import java.util.List;
 
 /**
  * @author Vincenzo Pace | KIT
  * @version 1.0
-
+*/
 public abstract class Graph {
-    private List<Vertex> vertices;
-    private int numVertices;
-    private int numEdges;
 
     public abstract List<Vertex> getNeighbours(Vertex v);
     public abstract List<Edge> getEdges(Vertex v);
@@ -25,7 +22,4 @@ public abstract class Graph {
     public abstract void removeEdge(Vertex v, Vertex w);
     public abstract void insertEdge(Vertex v, Vertex w, int distance, int time);
 
-
-
 }
-*/
