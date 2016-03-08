@@ -9,9 +9,10 @@ Aa
 bB
 C
 d
+
 --
-Aa;bB;1;3
-C;Aa;2;4
-Aa;d;11;20
-bB;C;5;2
+Aa;bB;1;3 \n
+C;Aa;2;4 \n
+Aa;d;11;20 \n
+bB;C;5;2 \n
 C;d;3;1
