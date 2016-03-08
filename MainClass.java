@@ -3,9 +3,10 @@ package navi;
 import navi.commandline.Commandline;
 import navi.commandline.Terminal;
 import navi.exceptions.FileSyntaxException;
-import navi.exceptions.GraphSyntaxException;
 import navi.exceptions.InvalidOperationException;
 import navi.exceptions.NoSuchEntryException;
+import navi.exceptions.UserInputException;
+import navi.exceptions.GraphSyntaxException;
 import navi.serializer.FileInputHelper;
 import navi.serializer.Serializer;
 
@@ -33,13 +34,13 @@ public final class MainClass {
             System.out.println(Serializer.validate(lines));
             if (Serializer.validate(lines))
                 Commandline.navigationUp(Serializer.initializeGraph(lines));
+        }  catch (FileSyntaxException e) {
+            Terminal.printLine("Error, " + e.getMessage());
+            System.exit(1);
+        } catch (NoSuchEntryException | InvalidOperationException | GraphSyntaxException | UserInputException e) {
+            Terminal.printLine("Error, " + e.getMessage());
         } catch (IllegalArgumentException e) {
             System.exit(1);
-        } catch (FileSyntaxException e) {
-            Terminal.printLine("Error, " + e.getMessage());
-            System.exit(1);
-        } catch (NoSuchEntryException | InvalidOperationException | GraphSyntaxException e) {
-            Terminal.printLine("Error, " + e.getMessage());
         }
     }
 }

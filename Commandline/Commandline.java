@@ -2,6 +2,7 @@ package navi.commandline;
 
 import navi.exceptions.InvalidOperationException;
 import navi.exceptions.NoSuchEntryException;
+import navi.exceptions.UserInputException;
 import navi.graph.MapGraph;
 
 /**
@@ -43,7 +44,7 @@ public final class Commandline {
      * @throws NoSuchEntryException wir geworfen wenn die gewollte Kante, Knoten nicht existiert
      * @throws InvalidOperationException wird geworfen, wenn der Benutzer auf dem Graph Blödsinn machen will
      */
-    public static void navigationUp(MapGraph graph) throws NoSuchEntryException, InvalidOperationException{
+    public static void navigationUp(MapGraph graph) throws NoSuchEntryException, InvalidOperationException {
         while (true) {
            try {
                String commands = Terminal.readLine();
@@ -61,6 +62,8 @@ public final class Commandline {
                        graph.info();
                        break;
                    case INSERT:
+                       if (parts.length != 5)
+                           throw new UserInputException("insert needs exactly 4 arguments separated by spaces.");
                        graph.insertEdge(parts[1], parts[2], parts[3], parts[4]);
                        break;
                    case NODES:
@@ -75,12 +78,16 @@ public final class Commandline {
                    default:
                        throw new IllegalArgumentException("Error,invalid input. "
                        + "Valid inputs are: " + SEARCH + ", " + REMOVE
-                              + ", " + ROUTE + ", " + INSERT + ", " +
-                               INFO + ", " + NODES + ", " + VERTICES
+                              + ", " + ROUTE + ", " + INSERT + ", "
+                               + INFO + ", " + NODES + ", " + VERTICES
                                + ", " + QUIT + ".");
                }
+           } catch (UserInputException e) {
+               Terminal.printLine("Error, " + e.getMessage());
            } catch (IllegalArgumentException e) {
                Terminal.printLine(e.getMessage());
+           } catch (ArrayIndexOutOfBoundsException e) {
+               Terminal.printLine("Arguments have to be separated by spaces.");
            }
         }
     }

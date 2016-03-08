@@ -1,6 +1,5 @@
 package navi.serializer;
 
-import navi.commandline.Terminal;
 import navi.exceptions.FileSyntaxException;
 import navi.exceptions.GraphSyntaxException;
 import navi.graph.MapGraph;
@@ -11,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Der Serializer ist zuständig für das Einlesen der Textdatei und überführen der Daten in die Graphstruktur
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
@@ -44,8 +44,8 @@ public final class Serializer {
      * @param worldMap Die Textdatei mit den Informationen über den Graph
      * @return true, wenn es Duplikate gibt, false, wenn nicht
      */
-    private static boolean duplicates(final String[] worldMap) throws FileSyntaxException{
-        Set<String> lump = new HashSet<String>();
+    private static boolean duplicates(final String[] worldMap) throws FileSyntaxException {
+        Set<String> lump = new HashSet<>();
         for (String entry : worldMap) {
             if (lump.contains(entry))
                 throw new FileSyntaxException("duplicate found!");
@@ -115,7 +115,7 @@ public final class Serializer {
      * @throws GraphSyntaxException Falls der Graph nicht gegebenen Bedingungen
      * "ungerichtet, schlingenfrei, eindeutig" erfüllt.
      */
-    public static boolean validate(String[] worldMap) throws FileSyntaxException, GraphSyntaxException{
+    public static boolean validate(String[] worldMap) throws FileSyntaxException, GraphSyntaxException {
         cities(worldMap);
         int i = 0;
             while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
@@ -214,7 +214,6 @@ public final class Serializer {
     /**
      * Mit dieser Methode werden gezielt die Knoten ausgelesen.
      * @param worldMap Die Textdatei mit den Informationen über den Graph
-     * @return die Knoten.
      */
     private static void cities(String[] worldMap) {
         int i = 0;
