@@ -67,7 +67,11 @@ public final class Commandline {
                        quit();
                        break;
                    default:
-                       throw new IllegalArgumentException("Error,invalid input.");
+                       throw new IllegalArgumentException("Error,invalid input. "
+                       + "Valid inputs are: " + SEARCH + ", " + REMOVE
+                              + ", " + ROUTE + ", " + INSERT + ", " +
+                               INFO + ", " + NODES + ", " + VERTICES
+                               + ", " + QUIT + ".");
                }
            } catch (IllegalArgumentException e) {
                Terminal.printLine(e.getMessage());

@@ -75,6 +75,14 @@ public final class Serializer {
             if (!(startNodes.contains(element) || endNodes.contains(element)))
                 return true;
 
+        Set<String> nodes = new HashSet<>();
+        nodes.addAll(Arrays.asList(cities));
+        for (String element : startNodes)
+                if (!nodes.contains(element))
+                    return true;
+        for (String element : endNodes)
+            if (!nodes.contains(element))
+                return true;
         /**
          * Wir konkatenieren start und ziel um auf duplikate zu prüfen
          */

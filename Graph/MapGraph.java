@@ -85,9 +85,11 @@ public class MapGraph extends Graph {
      */
     public void nodes(String v) {
         try {
-            Terminal.printLine(getVertexByName(v).getNeighbours().toString());
+            for (Vertex element : getVertexByName(v).getNeighbours()) {
+                Terminal.printLine(element.toString());
+            }
         } catch (NullPointerException e) {
-            Terminal.printLine("No node with this name!");
+            Terminal.printLine("No node with this name found!");
         }
     }
 
