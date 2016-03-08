@@ -5,6 +5,7 @@ import navi.exceptions.FileSyntaxException;
 import navi.graph.MapGraph;
 import navi.graph.Vertex;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -65,6 +66,17 @@ public final class Serializer {
                 return true;
             }
         }
+
+        Set<String> startNodes = new HashSet<>();
+        startNodes.addAll(Arrays.asList(startCities));
+        Set<String> endNodes = new HashSet<>();
+        endNodes.addAll(Arrays.asList(destinationCities));
+        for (String element : cities) {
+            if (!(startNodes.contains(element) || endNodes.contains(element))) {
+                return true;
+            }
+        }
+
         /**
          * Wir konkatenieren start und ziel um auf duplikate zu prüfen
          */
@@ -87,11 +99,6 @@ public final class Serializer {
             lump2.add(entry);
         }
         return false;
-    }
-
-    private boolean checkForCoherent() {
-
-        return true;
     }
     /**
      * Die Methode die genutzt wird, um die Textdatei auf Gültigkeit zu überprüfen
