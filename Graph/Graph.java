@@ -18,6 +18,7 @@ public abstract class Graph {
     public abstract void vertices();
     public abstract Vertex getVertexByName(String name);
 
+    public abstract void info();
     public abstract int search(Vertex v, Vertex w, String criterion);
     public abstract Vertex[] route(Vertex v, Vertex w);
     public abstract void removeEdge(Vertex v, Vertex w);

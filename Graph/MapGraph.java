@@ -83,6 +83,7 @@ public class MapGraph extends Graph {
      * Gibt die Nachbarknoten vom Knoten v aus.
      * @param v der Name des Knoten dessen Nachbarn ausgegeben werden.
      */
+    @Override
     public void nodes(String v) {
         try {
             for (Vertex element : getVertexByName(v).getNeighbours()) {
@@ -91,6 +92,16 @@ public class MapGraph extends Graph {
         } catch (NullPointerException e) {
             Terminal.printLine("No node with this name found!");
         }
+    }
+
+    /**
+     * Der Info-Befehl. Gibt der Reihe nach alle Knoten und dann alle Kanten aus.
+     */
+    public void info() {
+        for (Vertex element : this.vertices)
+            Terminal.printLine(element.toString());
+        for (Edge edge : this.edges)
+            Terminal.printLine(edge.toString());
     }
 
     @Override

@@ -54,6 +54,7 @@ public final class Commandline {
                    case ROUTE:
                        break;
                    case INFO:
+                       graph.info();
                        break;
                    case INSERT:
                        break;
