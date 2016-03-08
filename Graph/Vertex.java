@@ -74,7 +74,7 @@ public class Vertex {
 
         Vertex vertex = (Vertex) o;
 
-        return name.equals(vertex.name);
+        return name.equalsIgnoreCase(vertex.name);
 
     }
 

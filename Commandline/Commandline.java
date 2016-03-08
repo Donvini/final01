@@ -44,7 +44,7 @@ public final class Commandline {
      * @throws NoSuchEntryException wir geworfen wenn die gewollte Kante, Knoten nicht existiert
      * @throws InvalidOperationException wird geworfen, wenn der Benutzer auf dem Graph Blödsinn machen will
      */
-    public static void navigationUp(MapGraph graph) throws NoSuchEntryException, InvalidOperationException {
+    public static void navigationUp(MapGraph graph)  {
         while (true) {
            try {
                String commands = Terminal.readLine();
@@ -59,6 +59,8 @@ public final class Commandline {
                    case ROUTE:
                        break;
                    case INFO:
+                       if (parts.length != 1)
+                           throw new UserInputException("info takes no arguments.");
                        graph.info();
                        break;
                    case INSERT:
@@ -67,9 +69,13 @@ public final class Commandline {
                        graph.insertEdge(parts[1], parts[2], parts[3], parts[4]);
                        break;
                    case NODES:
+                       if (parts.length != 2)
+                           throw new UserInputException("nodes needs exactly one argument: the node which neighbours you want.");
                        graph.nodes(parts[1]);
                        break;
                    case VERTICES:
+                       if (parts.length != 1)
+                        throw new UserInputException("vertices takes no arguments.");
                        graph.vertices();
                        break;
                    case QUIT:
@@ -82,10 +88,8 @@ public final class Commandline {
                                + INFO + ", " + NODES + ", " + VERTICES
                                + ", " + QUIT + ".");
                }
-           } catch (UserInputException e) {
+           } catch (UserInputException | NoSuchEntryException | InvalidOperationException | IllegalArgumentException e) {
                Terminal.printLine("Error, " + e.getMessage());
-           } catch (IllegalArgumentException e) {
-               Terminal.printLine(e.getMessage());
            } catch (ArrayIndexOutOfBoundsException e) {
                Terminal.printLine("Arguments have to be separated by spaces.");
            }

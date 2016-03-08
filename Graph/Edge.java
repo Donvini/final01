@@ -46,8 +46,6 @@ public class Edge {
 
         Edge edge = (Edge) o;
 
-        if (distance != edge.distance) return false;
-        if (time != edge.time) return false;
         if (!startNode.equals(edge.startNode)) return false;
         return endNode.equals(edge.endNode);
 

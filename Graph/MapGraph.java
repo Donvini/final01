@@ -6,6 +6,8 @@ import navi.exceptions.NoSuchEntryException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ public class MapGraph {
     /**
      * Extra Liste der Knoten um schnellen zugriff zu gewährleisten.
      */
-    private List<Vertex> vertices = new ArrayList<>();
+    private Set<Vertex> vertices = new HashSet<>();
     /**
      * Extra Liste der Kanten um Schnellen zugriff zu gewährleisten und einfach zu erweitern.
      */
@@ -138,24 +140,37 @@ public class MapGraph {
      * @throws NoSuchEntryException Falls die beiden übergebenen Knoten nicht existieren.
      * @throws InvalidOperationException Falls es bereits eine Kante gibt.
      */
-    //TODO: Bereits vorhandene Kanten dürfen nicht hinzugefügt werden.
-    //TODO:
+    //TODO: Knoten hinzufügen wenn ne Kante zu ihm erstellt wird.
     public void insertEdge(String v, String w, String distance, String time)
             throws InvalidOperationException, NoSuchEntryException {
+
+        // Wenn es die beiden Knoten gibt
         if (this.vertices.contains(getVertexByName(v))
-                && this.vertices.contains(getVertexByName(w)))
-            if (!(this.edges.contains(new Edge(getVertexByName(v), getVertexByName(w),
-                    Integer.parseInt(distance), Integer.parseInt(time))))) {
+                && this.vertices.contains(getVertexByName(w))) {
+            // Aber noch keine Kante zwischen Knoten 1 und Knoten 2
+            if (!this.edges.contains(new Edge(getVertexByName(v), getVertexByName(w),
+                    Integer.parseInt(distance), Integer.parseInt(time)))) {
+                // Dann füge diese Kante hinzu.
                 this.edges.add(new Edge(getVertexByName(v), getVertexByName(w),
+                        Integer.parseInt(distance), Integer.parseInt(time)));
+                this.edges.add(new Edge(getVertexByName(w), getVertexByName(v),
                         Integer.parseInt(distance), Integer.parseInt(time)));
                 Terminal.printLine("OK");
             }
             else
                 throw new InvalidOperationException("There is already an edge.");
-        else if (this.vertices.contains(getVertexByName(v))
-                && !this.vertices.contains(getVertexByName(w))) {
+        }
+
+
+        else if ((this.vertices.contains(getVertexByName(v))
+                && !this.vertices.contains(getVertexByName(w)))
+                || this.vertices.contains(getVertexByName(w))
+                && !this.vertices.contains(getVertexByName(v))) {
             this.vertices.add(new Vertex(w));
+            this.vertices.add(new Vertex(v));
             this.edges.add(new Edge(getVertexByName(v), getVertexByName(w),
+                    Integer.parseInt(distance), Integer.parseInt(time)));
+            this.edges.add(new Edge(getVertexByName(w), getVertexByName(v),
                     Integer.parseInt(distance), Integer.parseInt(time)));
             getVertexByName(w).getEdges().add(new Edge(getVertexByName(v), getVertexByName(w),
                     Integer.parseInt(distance), Integer.parseInt(time)));
@@ -165,6 +180,7 @@ public class MapGraph {
             this.world.put(getVertexByName(w), getVertexByName(w).getEdges());
             Terminal.printLine("OK");
         }
+
         else if (!(this.vertices.contains(getVertexByName(v))
                 && this.vertices.contains(getVertexByName(w))))
             throw new NoSuchEntryException("both nodes do not exist");
