@@ -1,6 +1,8 @@
 package navi.commandline;
 
-import navi.graph.Graph;
+import navi.exceptions.InvalidOperationException;
+import navi.exceptions.NoSuchEntryException;
+import navi.graph.MapGraph;
 
 /**
  * Die Klasse, die für die Nutzereingaben benutzt wird
@@ -38,8 +40,10 @@ public final class Commandline {
     /**
      * Hauptmethode der Klasse um die Nutzereingaben entgegenzunehmen
      * @param graph auf diesem Graph sollen alle operationen ausfgeführt werden
+     * @throws NoSuchEntryException wir geworfen wenn die gewollte Kante, Knoten nicht existiert
+     * @throws InvalidOperationException wird geworfen, wenn der Benutzer auf dem Graph Blödsinn machen will
      */
-    public static void navigationUp(Graph graph) {
+    public static void navigationUp(MapGraph graph) throws NoSuchEntryException, InvalidOperationException{
         while (true) {
            try {
                String commands = Terminal.readLine();
@@ -57,6 +61,7 @@ public final class Commandline {
                        graph.info();
                        break;
                    case INSERT:
+                       graph.insertEdge(parts[1], parts[2], parts[3], parts[4]);
                        break;
                    case NODES:
                        graph.nodes(parts[1]);

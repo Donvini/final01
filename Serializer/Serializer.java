@@ -2,6 +2,7 @@ package navi.serializer;
 
 import navi.commandline.Terminal;
 import navi.exceptions.FileSyntaxException;
+import navi.exceptions.GraphSyntaxException;
 import navi.graph.MapGraph;
 import navi.graph.Vertex;
 
@@ -43,11 +44,11 @@ public final class Serializer {
      * @param worldMap Die Textdatei mit den Informationen über den Graph
      * @return true, wenn es Duplikate gibt, false, wenn nicht
      */
-    private static boolean duplicates(final String[] worldMap) {
+    private static boolean duplicates(final String[] worldMap) throws FileSyntaxException{
         Set<String> lump = new HashSet<String>();
         for (String entry : worldMap) {
             if (lump.contains(entry))
-                return true;
+                throw new FileSyntaxException("duplicate found!");
             lump.add(entry);
         }
         return false;
@@ -58,12 +59,12 @@ public final class Serializer {
      * @param worldmap  Die Textdatei mit den Informationen über den Graph
      * @return true wenn es welche gibt, false, wenn nicht
      */
-    private static boolean checkForMulti(final String[] worldmap) {
+    private static boolean checkForMulti(final String[] worldmap) throws GraphSyntaxException {
         split(connections(worldmap));
         for (int i = 0; i < startCities.length; i++) {
             // Schlingen überprüfen
             if (startCities[i].equalsIgnoreCase(destinationCities[i])) {
-                return true;
+                throw new GraphSyntaxException("loop found!");
             }
         }
         // Keine Knoten ohne Kanten!
@@ -73,16 +74,16 @@ public final class Serializer {
         endNodes.addAll(Arrays.asList(destinationCities));
         for (String element : cities)
             if (!(startNodes.contains(element) || endNodes.contains(element)))
-                return true;
+                throw new GraphSyntaxException("edge without belonging node found!");
 
         Set<String> nodes = new HashSet<>();
         nodes.addAll(Arrays.asList(cities));
         for (String element : startNodes)
                 if (!nodes.contains(element))
-                    return true;
+                    throw new GraphSyntaxException("node without edge found!");
         for (String element : endNodes)
             if (!nodes.contains(element))
-                return true;
+                throw new GraphSyntaxException("node without edge found!");
         /**
          * Wir konkatenieren start und ziel um auf duplikate zu prüfen
          */
@@ -95,13 +96,13 @@ public final class Serializer {
         Set<String> lump1 = new HashSet<>();
         for (String entry : connectedCities1) {
             if (lump1.contains(entry))
-                return true;
+                throw new GraphSyntaxException("multi edge found!");
             lump1.add(entry);
         }
         Set<String> lump2 = new HashSet<>();
         for (String entry : connectedCities2) {
             if (lump2.contains(entry) || lump1.contains(entry))
-                return true;
+                throw new GraphSyntaxException("multi edge found!");
             lump2.add(entry);
         }
         return false;
@@ -110,11 +111,13 @@ public final class Serializer {
      * Die Methode die genutzt wird, um die Textdatei auf Gültigkeit zu überprüfen
      * @param worldMap Die übergebene Textdatei als String Array nach nutzen von FileInputHelper
      * @return ob die Datei gültig war
+     * @throws FileSyntaxException Falls die Datei ungültig war wird dies der Main Methode mitgeteilt
+     * @throws GraphSyntaxException Falls der Graph nicht gegebenen Bedingungen
+     * "ungerichtet, schlingenfrei, eindeutig" erfüllt.
      */
-    public static boolean validate(String[] worldMap) {
+    public static boolean validate(String[] worldMap) throws FileSyntaxException, GraphSyntaxException{
         cities(worldMap);
         int i = 0;
-        try {
             while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
                 if (!worldMap[i].matches(REGEX_CITY))
                     throw new FileSyntaxException("Invalid city entry found.");
@@ -127,12 +130,7 @@ public final class Serializer {
                 i++;
             }
             return !duplicates(worldMap) && !checkForMulti(worldMap);
-        } catch (FileSyntaxException e) {
-            Terminal.printLine("Error, " + e.getMessage());
-            System.exit(1);
         }
-        return false;
-    }
 
     /**
      * Diese Methode zerstückelt die Kanten und setzt deren einzelne

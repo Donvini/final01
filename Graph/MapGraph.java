@@ -1,6 +1,8 @@
 package navi.graph;
 
 import navi.commandline.Terminal;
+import navi.exceptions.InvalidOperationException;
+import navi.exceptions.NoSuchEntryException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +13,7 @@ import java.util.List;
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
-public class MapGraph extends Graph {
+public class MapGraph {
 
     /**
      * Hashmap, die jedem Knoten seine zugehörigen Kanten zuordnet. Hauptstruktur.
@@ -42,6 +44,7 @@ public class MapGraph extends Graph {
         }
         for (int i = 0; i < km.length; i++) {
             this.edges.add(new Edge(startCities[i], destinationCities[i], km[i], time[i]));
+            this.edges.add(new Edge(destinationCities[i], startCities[i], km[i], time[i]));
         }
         for (Vertex element : vertices) {
             for (int j = 0; j <= vertices.size(); j++) {
@@ -72,7 +75,6 @@ public class MapGraph extends Graph {
     /**
      * methode um alle Knoten auszugeben.
      */
-    @Override
     public void vertices() {
         for (Vertex element : this.vertices) {
             Terminal.printLine(element.toString());
@@ -83,7 +85,6 @@ public class MapGraph extends Graph {
      * Gibt die Nachbarknoten vom Knoten v aus.
      * @param v der Name des Knoten dessen Nachbarn ausgegeben werden.
      */
-    @Override
     public void nodes(String v) {
         try {
             for (Vertex element : getVertexByName(v).getNeighbours()) {
@@ -100,19 +101,11 @@ public class MapGraph extends Graph {
     public void info() {
         for (Vertex element : this.vertices)
             Terminal.printLine(element.toString());
-        for (Edge edge : this.edges)
-            Terminal.printLine(edge.toString());
+        for (int i = 0; i < this.edges.size(); i = i + 2) {
+            Terminal.printLine(this.edges.get(i).toString());
+        }
     }
 
-    @Override
-    public Edge getEdge(Vertex v, Vertex w) {
-        return null;
-    }
-
-    @Override
-    public Vertex getVertex() {
-        return null;
-    }
 
     /**
      *  Gibt den Knoten der zu einem Namen gehört aus.
@@ -120,9 +113,9 @@ public class MapGraph extends Graph {
      * @return liefert den entsprechenden Knoten
      */
     public Vertex getVertexByName(String name) {
-        for (Vertex vertice : this.vertices) {
-            if (vertice.getName().equalsIgnoreCase(name))
-                return vertice;
+        for (Vertex vertex : this.vertices) {
+            if (vertex.getName().equalsIgnoreCase(name))
+                return vertex;
         }
         return null;
     }
@@ -135,44 +128,45 @@ public class MapGraph extends Graph {
         return world;
     }
 
-    @Override
-    public List<Edge> getEdges(Vertex v) {
-        return null;
-    }
 
-    @Override
-    public List<Vertex> getNeighbours(Vertex v) {
-        return null;
-    }
-
-
-    @Override
-    public int getNumEdges() {
-        return 0;
-    }
-
-    @Override
-    public int getNumVertices() {
-        return 0;
-    }
-
-    @Override
-    public int search(Vertex v, Vertex w, String criterion) {
-        return 0;
-    }
-
-    @Override
-    public Vertex[] route(Vertex v, Vertex w) {
-        return new Vertex[0];
-    }
-
-    @Override
-    public void insertEdge(Vertex v, Vertex w, int distance, int time) {
-
-    }
-
-    @Override
-    public void removeEdge(Vertex v, Vertex w) {
-
+    /**
+     * Methode um dem Graphen Kanten hinzuzufügen
+     * @param v der Startknoten
+     * @param w der Zielknoten
+     * @param distance Abstand in km
+     * @param time Entfernung in Zeit
+     * @throws NoSuchEntryException Falls die beiden übergebenen Knoten nicht existieren.
+     * @throws InvalidOperationException Falls es bereits eine Kante gibt.
+     */
+    //TODO: Bereits vorhandene Kanten dürfen nicht hinzugefügt werden.
+    //TODO:
+    public void insertEdge(String v, String w, String distance, String time)
+            throws InvalidOperationException, NoSuchEntryException {
+        if (this.vertices.contains(getVertexByName(v))
+                && this.vertices.contains(getVertexByName(w)))
+            if (!(this.edges.contains(new Edge(getVertexByName(v), getVertexByName(w),
+                    Integer.parseInt(distance), Integer.parseInt(time))))) {
+                this.edges.add(new Edge(getVertexByName(v), getVertexByName(w),
+                        Integer.parseInt(distance), Integer.parseInt(time)));
+                Terminal.printLine("OK");
+            }
+            else
+                throw new InvalidOperationException("There is already an edge.");
+        else if (this.vertices.contains(getVertexByName(v))
+                && !this.vertices.contains(getVertexByName(w))) {
+            this.vertices.add(new Vertex(w));
+            this.edges.add(new Edge(getVertexByName(v), getVertexByName(w),
+                    Integer.parseInt(distance), Integer.parseInt(time)));
+            getVertexByName(w).getEdges().add(new Edge(getVertexByName(v), getVertexByName(w),
+                    Integer.parseInt(distance), Integer.parseInt(time)));
+            getVertexByName(w).getEdges().add(new Edge(getVertexByName(w), getVertexByName(v),
+                    Integer.parseInt(distance), Integer.parseInt(time)));
+            getVertexByName(w).getNeighbours().add(getVertexByName(v));
+            this.world.put(getVertexByName(w), getVertexByName(w).getEdges());
+            Terminal.printLine("OK");
+        }
+        else if (!(this.vertices.contains(getVertexByName(v))
+                && this.vertices.contains(getVertexByName(w))))
+            throw new NoSuchEntryException("both nodes do not exist");
     }
 }
