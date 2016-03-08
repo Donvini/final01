@@ -37,4 +37,28 @@ public class Edge {
         return this.startNode.toString() + ";" + this.endNode.toString() + ";"
                 + this.distance + ";" + this.time;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Edge edge = (Edge) o;
+
+        if (distance != edge.distance) return false;
+        if (time != edge.time) return false;
+        if (!startNode.equals(edge.startNode)) return false;
+        return endNode.equals(edge.endNode);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = startNode.hashCode();
+        result = 31 * result + endNode.hashCode();
+        result = 31 * result + distance;
+        result = 31 * result + time;
+        return result;
+    }
 }
