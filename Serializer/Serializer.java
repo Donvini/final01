@@ -65,24 +65,26 @@ public final class Serializer {
                 return true;
             }
         }
-        for (int j = 0; j < startCities.length; j++) {
-            for (int k = j + 1; k < startCities.length; k++) {
-                if (startCities[j].equalsIgnoreCase(destinationCities[k]))
-                    return true;
-            }
-        }
         /**
          * Wir konkatenieren start und ziel um auf duplikate zu prüfen
          */
-        String[] connectedCities = new String[startCities.length];
-        for (int l = 0; l < connectedCities.length; l++) {
-            connectedCities[l] = startCities[l] + destinationCities[l];
+        String[] connectedCities1 = new String[startCities.length];
+        String[] connectedCities2 = new String[startCities.length];
+        for (int l = 0; l < connectedCities1.length; l++) {
+            connectedCities1[l] = startCities[l] + destinationCities[l];
+            connectedCities2[l] = destinationCities[l] + startCities[l];
         }
-        Set<String> lump = new HashSet<>();
-        for (String entry : connectedCities) {
-            if (lump.contains(entry))
+        Set<String> lump1 = new HashSet<>();
+        for (String entry : connectedCities1) {
+            if (lump1.contains(entry))
                 return true;
-            lump.add(entry);
+            lump1.add(entry);
+        }
+        Set<String> lump2 = new HashSet<>();
+        for (String entry : connectedCities2) {
+            if (lump2.contains(entry) || lump1.contains(entry))
+                return true;
+            lump2.add(entry);
         }
         return false;
     }
