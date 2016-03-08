@@ -1,6 +1,7 @@
 package navi.graph;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Diese Klasse representiert eine Stadt in unserem Navigationssystem.
@@ -19,7 +20,7 @@ public class Vertex {
 
     // TODO: Nachbarliste einbauen
     private ArrayList<Edge> edges = new ArrayList<>();
-    private ArrayList<Vertex> neighbours = new ArrayList<>();
+    private LinkedList<Vertex> neighbours = new LinkedList<>();
 
     /**
      * Konstruktor der Klasse
@@ -40,7 +41,7 @@ public class Vertex {
      *
      * @return alle nachbarn des Knoten
      */
-    public ArrayList<Vertex> getNeighbours() {
+    public LinkedList<Vertex> getNeighbours() {
         return neighbours;
     }
 

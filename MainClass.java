@@ -1,7 +1,6 @@
 package navi;
 
 import navi.commandline.Commandline;
-import navi.commandline.Terminal;
 import navi.serializer.FileInputHelper;
 import navi.serializer.Serializer;
 
@@ -30,9 +29,6 @@ public final class MainClass {
             if( Serializer.validate(lines))
                 Commandline.navigationUp(Serializer.initializeGraph(lines));
         } catch (IllegalArgumentException e) {
-            System.exit(1);
-        } catch (IndexOutOfBoundsException e) {
-            Terminal.printLine("Error, No argument was given.");
             System.exit(1);
         }
     }

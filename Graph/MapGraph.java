@@ -43,12 +43,16 @@ public class MapGraph extends Graph {
         }
         for (Vertex element : vertices) {
             for (int j = 0; j <= vertices.size(); j++) {
-                if (startCities[j].getName().equals(element.getName())
-                        || destinationCities[j].getName().equals(element.getName())) {
-                    element.getEdges().add(new Edge(startCities[j], destinationCities[j],
-                            km[j], time[j]));
-                    element.getEdges().add(new Edge(destinationCities[j], startCities[j],
-                            km[j], time[j]));
+                try {
+                    if (startCities[j].getName().equals(element.getName())
+                            || destinationCities[j].getName().equals(element.getName())) {
+                        element.getEdges().add(new Edge(startCities[j], destinationCities[j],
+                                km[j], time[j]));
+                        element.getEdges().add(new Edge(destinationCities[j], startCities[j],
+                                km[j], time[j]));
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    break;
                 }
             }
             this.world.put(element, element.getEdges());

@@ -29,6 +29,7 @@ public final class Serializer {
     private static String[] destinationCities;
     private static int[] distance;
     private static int[] time;
+    private static String[] cities;
 
     /**
      * privater Konstruktor um Instantiierung zu vermeiden
@@ -86,12 +87,17 @@ public final class Serializer {
         return false;
     }
 
+    private boolean checkForCoherent() {
+
+        return true;
+    }
     /**
      * Die Methode die genutzt wird, um die Textdatei auf Gültigkeit zu überprüfen
      * @param worldMap Die übergebene Textdatei als String Array nach nutzen von FileInputHelper
      * @return ob die Datei gültig war
      */
     public static boolean validate(String[] worldMap) {
+        cities(worldMap);
         int i = 0;
         try {
             while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
@@ -169,7 +175,7 @@ public final class Serializer {
      * @return  Der Graph der mit den Klassenatributen von Serializer gebaut wird
      */
     public static MapGraph initializeGraph(String[] worldmap) {
-        return new MapGraph(cities(worldmap), startVertices(startCities),
+        return new MapGraph(cities, startVertices(startCities),
                 destinationVertices(destinationCities), distance, time);
     }
 
@@ -180,7 +186,7 @@ public final class Serializer {
      * @return die Kanten
      */
     private static String[] connections(String[] worldMap) {
-        int i = cities(worldMap).length + 1;
+        int i = cities.length + 1;
         int l = i;
         int j = 0;
         while (i < worldMap.length) {
@@ -197,13 +203,12 @@ public final class Serializer {
      * @param worldMap Die Textdatei mit den Informationen über den Graph
      * @return die Knoten.
      */
-    private static String[] cities(String[] worldMap) {
+    private static void cities(String[] worldMap) {
         int i = 0;
         while (!worldMap[i].equalsIgnoreCase("--") && i < worldMap.length) {
             i++;
         }
-        String[] cities = new String[i];
+        cities = new String[i];
         System.arraycopy(worldMap, 0, cities, 0, i);
-        return cities;
     }
 }
