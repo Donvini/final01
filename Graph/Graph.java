@@ -15,12 +15,13 @@ public abstract class Graph {
     public abstract int getNumVertices();
     public abstract int getNumEdges();
     public abstract Vertex getVertex();
-    public abstract Vertex[] vertices();
+    public abstract void vertices();
     public abstract Vertex getVertexByName(String name);
 
     public abstract int search(Vertex v, Vertex w, String criterion);
     public abstract Vertex[] route(Vertex v, Vertex w);
     public abstract void removeEdge(Vertex v, Vertex w);
     public abstract void insertEdge(Vertex v, Vertex w, int distance, int time);
+    public abstract void nodes(String name);
 
 }

@@ -1,5 +1,7 @@
 package navi.graph;
 
+import navi.commandline.Terminal;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,18 +46,48 @@ public class MapGraph extends Graph {
         for (Vertex element : vertices) {
             for (int j = 0; j <= vertices.size(); j++) {
                 try {
-                    if (startCities[j].getName().equals(element.getName())
-                            || destinationCities[j].getName().equals(element.getName())) {
+                    if (startCities[j].getName().equals(element.getName())) {
                         element.getEdges().add(new Edge(startCities[j], destinationCities[j],
                                 km[j], time[j]));
                         element.getEdges().add(new Edge(destinationCities[j], startCities[j],
                                 km[j], time[j]));
+                        element.getNeighbours().add(destinationCities[j]);
+                    }
+                    else if (destinationCities[j].getName().equals(element.getName())) {
+                        element.getEdges().add(new Edge(destinationCities[j], startCities[j],
+                                km[j], time[j]));
+                        element.getEdges().add(new Edge(startCities[j], destinationCities[j],
+                                km[j], time[j]));
+                        element.getNeighbours().add(startCities[j]);
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
                     break;
                 }
             }
             this.world.put(element, element.getEdges());
+        }
+
+    }
+
+    /**
+     * methode um alle Knoten auszugeben.
+     */
+    @Override
+    public void vertices() {
+        for (Vertex element : this.vertices) {
+            Terminal.printLine(element.toString());
+        }
+    }
+
+    /**
+     * Gibt die Nachbarknoten vom Knoten v aus.
+     * @param v der Name des Knoten dessen Nachbarn ausgegeben werden.
+     */
+    public void nodes(String v) {
+        try {
+            Terminal.printLine(getVertexByName(v).getNeighbours().toString());
+        } catch (NullPointerException e) {
+            Terminal.printLine("No node with this name!");
         }
     }
 
@@ -69,9 +101,17 @@ public class MapGraph extends Graph {
         return null;
     }
 
-    @Override
-    public Vertex[] vertices() {
-        return new Vertex[0];
+    /**
+     *  Gibt den Knoten der zu einem Namen gehört aus.
+     * @param name Der Name des gesuchten Knoten
+     * @return liefert den entsprechenden Knoten
+     */
+    public Vertex getVertexByName(String name) {
+        for (Vertex vertice : this.vertices) {
+            if (vertice.getName().equalsIgnoreCase(name))
+                return vertice;
+        }
+        return null;
     }
 
     /**
@@ -92,10 +132,6 @@ public class MapGraph extends Graph {
         return null;
     }
 
-    @Override
-    public Vertex getVertexByName(String name) {
-        return null;
-    }
 
     @Override
     public int getNumEdges() {
