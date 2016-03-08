@@ -66,16 +66,14 @@ public final class Serializer {
                 return true;
             }
         }
-
+        // Keine Knoten ohne Kanten!
         Set<String> startNodes = new HashSet<>();
         startNodes.addAll(Arrays.asList(startCities));
         Set<String> endNodes = new HashSet<>();
         endNodes.addAll(Arrays.asList(destinationCities));
-        for (String element : cities) {
-            if (!(startNodes.contains(element) || endNodes.contains(element))) {
+        for (String element : cities)
+            if (!(startNodes.contains(element) || endNodes.contains(element)))
                 return true;
-            }
-        }
 
         /**
          * Wir konkatenieren start und ziel um auf duplikate zu prüfen

@@ -24,13 +24,14 @@ public final class Commandline {
     /**
      * Die Kriterien, nach denen gesucht werden kann.
      */
-    private enum criterion { TIME, ROUTE, OPTIMAL, ALL}
+    private enum criterion { TIME, ROUTE, OPTIMAL, ALL }
 
 
     /**
      * Privater Konstruktor um Instantiierung zu verhindern.
      */
     private Commandline() {
+
     }
 
 
@@ -57,8 +58,10 @@ public final class Commandline {
                    case INSERT:
                        break;
                    case NODES:
+                       graph.nodes(parts[1]);
                        break;
                    case VERTICES:
+                       graph.vertices();
                        break;
                    case QUIT:
                        quit();
