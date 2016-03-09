@@ -23,12 +23,9 @@ public final class Commandline {
     private static final String NODES = "nodes";
     private static final String VERTICES = "vertices";
     private static final String QUIT = "quit";
-
-    /**
-     * Die Kriterien, nach denen gesucht werden kann.
-     */
-    private enum criterion { TIME, ROUTE, OPTIMAL, ALL }
-
+    private static final String TIME = "time";
+    private static final String OPTIMAL = "optimal";
+    private static final String ALL = "all";
 
     /**
      * Privater Konstruktor um Instantiierung zu verhindern.
@@ -45,9 +42,9 @@ public final class Commandline {
     public static void navigationUp(MapGraph graph)  {
         while (true) {
            try {
-               String commands = Terminal.readLine();
-               if (commands == null)
-                   throw new IllegalArgumentException("Error,invalid input.");
+               String commands = Terminal.readLine().toLowerCase();
+               if (commands.length() == 0)
+                   throw new IllegalArgumentException("you have to enter an argument.");
                String[] parts = commands.split("\\s", 2);
                switch (parts[0]) {
                    case SEARCH:
@@ -59,6 +56,22 @@ public final class Commandline {
                        graph.remove(removeParts[0], removeParts[1]);
                        break;
                    case ROUTE:
+                       String[] routeParts = parts[1].split(";");
+                       if (routeParts.length != 3)
+                           throw new UserInputException("route takes 3 arguments separated by semicolon.");
+                       switch (routeParts[2]) {
+                           case TIME:
+                               break;
+                           case ROUTE:
+                               break;
+                           case OPTIMAL:
+                               break;
+                           case ALL:
+                               break;
+                           default:
+                               throw new UserInputException("route expects one of the 4 criterions: "
+                                       + "time, route, optimal or all");
+                       }
                        break;
                    case INFO:
                        if (parts.length != 1)
