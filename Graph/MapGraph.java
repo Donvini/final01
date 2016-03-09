@@ -99,10 +99,15 @@ public class MapGraph {
      * Der Info-Befehl. Gibt der Reihe nach alle Knoten und dann alle Kanten aus.
      */
     public void info() {
-        for (Vertex element : this.vertices)
-            Terminal.printLine(element.toString());
-        for (int i = 0; i < this.edges.size(); i = i + 2) {
-            Terminal.printLine(this.edges.get(i).toString());
+        if (this.world.isEmpty())
+            Terminal.printLine("");
+        else {
+            for (Vertex element : this.vertices)
+                Terminal.printLine(element.toString());
+            Terminal.printLine("--");
+            for (int i = 0; i < this.edges.size(); i = i + 2) {
+                Terminal.printLine(this.edges.get(i).toString());
+            }
         }
     }
 
@@ -188,7 +193,6 @@ public class MapGraph {
             this.world.put(getVertexByName(w), getVertexByName(w).getEdges());
             Terminal.printLine("OK");
         }
-
         else if (!(this.vertices.contains(getVertexByName(v))
                 && this.vertices.contains(getVertexByName(w))))
             throw new NoSuchEntryException("both nodes do not exist");
@@ -200,7 +204,6 @@ public class MapGraph {
      * @param w Stadt 2
      * @throws NoSuchEntryException falls die gesuchte Verbindung nicht existiert.
      */
-    //TODO: getter für Kante.
     public void remove(String v, String w) throws NoSuchEntryException {
         if ((getVertexByName(v) != null
                 && getVertexByName(w) != null)
@@ -211,6 +214,10 @@ public class MapGraph {
             getVertexByName(w).getNeighbours().remove(getVertexByName(v));
             getVertexByName(v).getEdges().remove(getEdgeByVertices(new Vertex(v), new Vertex(w)));
             getVertexByName(w).getEdges().remove(getEdgeByVertices(new Vertex(w), new Vertex(v)));
+            if (getVertexByName(v).getNeighbours().isEmpty())
+                this.vertices.remove(getVertexByName(v));
+            if (getVertexByName(w).getNeighbours().isEmpty())
+                this.vertices.remove(getVertexByName(w));
             Terminal.printLine("OK");
         }
         else

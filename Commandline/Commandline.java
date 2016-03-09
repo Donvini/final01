@@ -53,6 +53,7 @@ public final class Commandline {
                    case SEARCH:
                        break;
                    case REMOVE:
+                       // TODO: Trennung nach Semikolon
                        if (parts.length != 3)
                            throw new UserInputException("remove takes 2 arguments.");
                        graph.remove(parts[1], parts[2]);
@@ -65,6 +66,7 @@ public final class Commandline {
                        graph.info();
                        break;
                    case INSERT:
+                       // TODO: Trennung nach Semikolon
                        if (parts.length != 5)
                            throw new UserInputException("insert needs exactly 4 arguments separated by spaces.");
                        graph.insertEdge(parts[1], parts[2], parts[3], parts[4]);
