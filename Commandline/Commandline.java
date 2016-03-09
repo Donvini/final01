@@ -41,8 +41,6 @@ public final class Commandline {
     /**
      * Hauptmethode der Klasse um die Nutzereingaben entgegenzunehmen
      * @param graph auf diesem Graph sollen alle operationen ausfgeführt werden
-     * @throws NoSuchEntryException wir geworfen wenn die gewollte Kante, Knoten nicht existiert
-     * @throws InvalidOperationException wird geworfen, wenn der Benutzer auf dem Graph Blödsinn machen will
      */
     public static void navigationUp(MapGraph graph)  {
         while (true) {
@@ -70,7 +68,8 @@ public final class Commandline {
                        break;
                    case NODES:
                        if (parts.length != 2)
-                           throw new UserInputException("nodes needs exactly one argument: the node which neighbours you want.");
+                           throw new UserInputException("nodes needs exactly one argument:"
+                                   + " the node which neighbours you want.");
                        graph.nodes(parts[1]);
                        break;
                    case VERTICES:
@@ -88,7 +87,8 @@ public final class Commandline {
                                + INFO + ", " + NODES + ", " + VERTICES
                                + ", " + QUIT + ".");
                }
-           } catch (UserInputException | NoSuchEntryException | InvalidOperationException | IllegalArgumentException e) {
+           } catch (UserInputException | NoSuchEntryException
+                   | InvalidOperationException | IllegalArgumentException e) {
                Terminal.printLine("Error, " + e.getMessage());
            } catch (ArrayIndexOutOfBoundsException e) {
                Terminal.printLine("Arguments have to be separated by spaces.");

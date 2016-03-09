@@ -49,7 +49,7 @@ public final class Serializer {
         for (String entry : worldMap) {
             if (lump.contains(entry))
                 throw new FileSyntaxException("duplicate found!");
-            lump.add(entry);
+            lump.add(entry.toLowerCase());
         }
         return false;
     }
@@ -74,16 +74,16 @@ public final class Serializer {
         endNodes.addAll(Arrays.asList(destinationCities));
         for (String element : cities)
             if (!(startNodes.contains(element) || endNodes.contains(element)))
-                throw new GraphSyntaxException("edge without belonging node found!");
+                throw new GraphSyntaxException("node without edge found!");
 
         Set<String> nodes = new HashSet<>();
         nodes.addAll(Arrays.asList(cities));
         for (String element : startNodes)
                 if (!nodes.contains(element))
-                    throw new GraphSyntaxException("node without edge found!");
+                    throw new GraphSyntaxException("edge without node found!");
         for (String element : endNodes)
             if (!nodes.contains(element))
-                throw new GraphSyntaxException("node without edge found!");
+                throw new GraphSyntaxException("edge without node found!");
         /**
          * Wir konkatenieren start und ziel um auf duplikate zu prüfen
          */

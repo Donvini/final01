@@ -140,7 +140,6 @@ public class MapGraph {
      * @throws NoSuchEntryException Falls die beiden übergebenen Knoten nicht existieren.
      * @throws InvalidOperationException Falls es bereits eine Kante gibt.
      */
-    //TODO: Knoten hinzufügen wenn ne Kante zu ihm erstellt wird.
     public void insertEdge(String v, String w, String distance, String time)
             throws InvalidOperationException, NoSuchEntryException {
 
@@ -166,8 +165,10 @@ public class MapGraph {
                 && !this.vertices.contains(getVertexByName(w)))
                 || this.vertices.contains(getVertexByName(w))
                 && !this.vertices.contains(getVertexByName(v))) {
-            this.vertices.add(new Vertex(w));
-            this.vertices.add(new Vertex(v));
+            if (getVertexByName(v) == null)
+                this.vertices.add(new Vertex(v));
+            if (getVertexByName(w) == null)
+                this.vertices.add(new Vertex(w));
             this.edges.add(new Edge(getVertexByName(v), getVertexByName(w),
                     Integer.parseInt(distance), Integer.parseInt(time)));
             this.edges.add(new Edge(getVertexByName(w), getVertexByName(v),
@@ -177,6 +178,7 @@ public class MapGraph {
             getVertexByName(w).getEdges().add(new Edge(getVertexByName(w), getVertexByName(v),
                     Integer.parseInt(distance), Integer.parseInt(time)));
             getVertexByName(w).getNeighbours().add(getVertexByName(v));
+            getVertexByName(v).getNeighbours().add(getVertexByName(w));
             this.world.put(getVertexByName(w), getVertexByName(w).getEdges());
             Terminal.printLine("OK");
         }

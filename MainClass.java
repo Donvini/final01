@@ -3,7 +3,6 @@ package navi;
 import navi.commandline.Commandline;
 import navi.commandline.Terminal;
 import navi.exceptions.FileSyntaxException;
-import navi.exceptions.InvalidOperationException;
 import navi.exceptions.GraphSyntaxException;
 import navi.serializer.FileInputHelper;
 import navi.serializer.Serializer;
