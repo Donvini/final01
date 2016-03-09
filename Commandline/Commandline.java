@@ -53,6 +53,9 @@ public final class Commandline {
                    case SEARCH:
                        break;
                    case REMOVE:
+                       if (parts.length != 3)
+                           throw new UserInputException("remove takes 2 arguments.");
+                       graph.remove(parts[1], parts[2]);
                        break;
                    case ROUTE:
                        break;

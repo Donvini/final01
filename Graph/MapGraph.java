@@ -7,8 +7,6 @@ import navi.exceptions.NoSuchEntryException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
 
 /**
  * Diese klasse stellt die Datenstruktur des Graphen dar.
@@ -25,11 +23,11 @@ public class MapGraph {
     /**
      * Extra Liste der Knoten um schnellen zugriff zu gewährleisten.
      */
-    private Set<Vertex> vertices = new HashSet<>();
+    private HashSet<Vertex> vertices = new HashSet<>();
     /**
      * Extra Liste der Kanten um Schnellen zugriff zu gewährleisten und einfach zu erweitern.
      */
-    private List<Edge> edges = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
 
 
     /**
@@ -114,10 +112,18 @@ public class MapGraph {
      * @param name Der Name des gesuchten Knoten
      * @return liefert den entsprechenden Knoten
      */
-    public Vertex getVertexByName(String name) {
+    private Vertex getVertexByName(String name) {
         for (Vertex vertex : this.vertices) {
             if (vertex.getName().equalsIgnoreCase(name))
                 return vertex;
+        }
+        return null;
+    }
+    private Edge getEdgeByVertices(Vertex v, Vertex w) {
+        for (Edge edge : this.edges) {
+            if ((edge.getStartNode().equals(v) && edge.getEndNode().equals(w))
+                    || (edge.getStartNode().equals(w) && edge.getEndNode().equals(v)))
+                return edge;
         }
         return null;
     }
@@ -186,5 +192,28 @@ public class MapGraph {
         else if (!(this.vertices.contains(getVertexByName(v))
                 && this.vertices.contains(getVertexByName(w))))
             throw new NoSuchEntryException("both nodes do not exist");
+    }
+
+    /**
+     * Methode um eine Verbindung, falls möglich, zu entfernen
+     * @param v Stadt 1
+     * @param w Stadt 2
+     * @throws NoSuchEntryException falls die gesuchte Verbindung nicht existiert.
+     */
+    //TODO: getter für Kante.
+    public void remove(String v, String w) throws NoSuchEntryException {
+        if ((getVertexByName(v) != null
+                && getVertexByName(w) != null)
+                && getEdgeByVertices(new Vertex(v), new Vertex(w)) != null) {
+            this.edges.remove(getEdgeByVertices(new Vertex(v), new Vertex(w)));
+            this.edges.remove(getEdgeByVertices(new Vertex(w), new Vertex(v)));
+            getVertexByName(v).getNeighbours().remove(getVertexByName(w));
+            getVertexByName(w).getNeighbours().remove(getVertexByName(v));
+            getVertexByName(v).getEdges().remove(getEdgeByVertices(new Vertex(v), new Vertex(w)));
+            getVertexByName(w).getEdges().remove(getEdgeByVertices(new Vertex(w), new Vertex(v)));
+            Terminal.printLine("OK");
+        }
+        else
+            throw new NoSuchEntryException("There is no connection or one of the nodes does not exist.");
     }
 }

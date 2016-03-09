@@ -29,6 +29,22 @@ public class Edge {
     }
 
     /**
+     * getter für Startknoten
+     * @return Startknoten
+     */
+    public Vertex getStartNode() {
+        return startNode;
+    }
+
+    /**
+     * getter für Zielknoten
+     * @return Zielknoten
+     */
+    public Vertex getEndNode() {
+        return endNode;
+    }
+
+    /**
      *
      * @return eine Kante mit der ursprünglichen Regex spezifikation.
      */
