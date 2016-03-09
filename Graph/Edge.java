@@ -64,7 +64,6 @@ public class Edge {
 
         if (!startNode.equals(edge.startNode)) return false;
         return endNode.equals(edge.endNode);
-
     }
 
     @Override

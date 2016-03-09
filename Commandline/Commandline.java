@@ -67,6 +67,7 @@ public final class Commandline {
                            case OPTIMAL:
                                break;
                            case ALL:
+                               graph.deepSearch(routeParts[0], routeParts[1]);
                                break;
                            default:
                                throw new UserInputException("route expects one of the 4 criterions: "

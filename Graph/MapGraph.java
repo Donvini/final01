@@ -1,5 +1,6 @@
 package navi.graph;
 
+import navi.algorithms.DeepSearch;
 import navi.commandline.Terminal;
 import navi.exceptions.InvalidOperationException;
 import navi.exceptions.NoSuchEntryException;
@@ -28,6 +29,16 @@ public class MapGraph {
      * Extra Liste der Kanten um Schnellen zugriff zu gewährleisten und einfach zu erweitern.
      */
     private ArrayList<Edge> edges = new ArrayList<>();
+
+    /**
+     * Alle besuchten knoten kommen hier rein
+     */
+    private HashSet<Vertex> visited = new HashSet<>();
+
+    /**
+     * Hier werden die wege entlang des Graphen gespeichert.
+     */
+    private HashMap<Vertex, Vertex> parents = new HashMap<>();
 
 
     /**
@@ -72,6 +83,17 @@ public class MapGraph {
 
     }
 
+    public void deepSearch(String v, String w) throws NoSuchEntryException {
+        if (getVertexByName(v) != null && getVertexByName(w) != null) {
+            HashMap<Vertex, Vertex> path = DeepSearch.dfsRec(getVertexByName(v),
+                    getVertexByName(w), visited, parents);
+            Terminal.printLine(path.keySet().toString());
+            parents.clear();
+            visited.clear();
+
+        }
+        else throw new NoSuchEntryException("at least one of the nodes does not exist!");
+    }
     /**
      * methode um alle Knoten auszugeben.
      */

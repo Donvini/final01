@@ -18,7 +18,6 @@ public class Vertex {
     private boolean isVisited;
 
 
-    // TODO: Nachbarliste einbauen
     private ArrayList<Edge> edges = new ArrayList<>();
     private LinkedList<Vertex> neighbours = new LinkedList<>();
 

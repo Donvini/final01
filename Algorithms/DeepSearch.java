@@ -19,15 +19,14 @@ public final class DeepSearch {
     /**
      * privater Konstruktor um Instantiierung zu vermeiden.
      */
-    private DeepSearch(){
+    private DeepSearch() {
     }
 
     /**
-     *
      * @param start Der Knoten von dem aus wir unseren Pfad beginnen.
-     * @param goal der Knoten den wir erreichen wollen.
+     * @param goal  der Knoten den wir erreichen wollen.
      */
-    public HashMap<Vertex, Vertex> dfs(Vertex start, Vertex goal) {
+    public static HashMap<Vertex, Vertex> dfs(Vertex start, Vertex goal) {
         Stack<Vertex> stack = new Stack<>();
         HashSet<Vertex> visited = new HashSet<>();
         HashMap<Vertex, Vertex> parent = new HashMap<>();
@@ -38,14 +37,37 @@ public final class DeepSearch {
             if (curr.equals(goal))
                 return parent;
             for (Vertex n :
-                 curr.getNeighbours()) {
+                    curr.getNeighbours()) {
                 if (!visited.contains(n)) {
                     visited.add(n);
-                    parent.put(n, curr);
+                    parent.put(curr, n);
                     stack.add(n);
                 }
             }
         }
         return null;
+    }
+
+    /**
+     * Rekursive Tiefensuche
+     * @param s
+     * @param g
+     * @param visited
+     * @param parents
+     * @return
+     */
+    public static HashMap<Vertex, Vertex> dfsRec(Vertex s, Vertex g, HashSet<Vertex> visited, HashMap<Vertex, Vertex> parents) {
+        if (s.equals(g))
+            return parents;
+        for (Vertex n :
+                s.getNeighbours()) {
+            if (!visited.contains(n)) {
+                visited.add(n);
+                parents.put(n, s);
+                dfsRec(n, g, visited, parents);
+            }
+        }
+        System.out.println(parents.toString());
+        return parents;
     }
 }
