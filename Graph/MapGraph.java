@@ -15,13 +15,10 @@ import java.util.HashSet;
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
-
 public class MapGraph {
-
     /**
      * Hashmap, die jedem Knoten seine zugehörigen Kanten zuordnet. Hauptstruktur.
      */
-    //TODO: überprüfen ob Graph zusammenhängend ist
     private HashMap<Vertex, ArrayList<Edge>> world = new HashMap<>();
     /**
      * Extra Liste der Knoten um schnellen zugriff zu gewährleisten.
@@ -33,25 +30,15 @@ public class MapGraph {
     private ArrayList<Edge> edges = new ArrayList<>();
 
     /**
-     * Alle besuchten knoten kommen hier rein
-     */
-    private HashSet<Vertex> visited = new HashSet<>();
-
-    /**
-     * Hier werden die wege entlang des Graphen gespeichert.
-     */
-    private HashMap<Vertex, Vertex> parents = new HashMap<>();
-
-
-    /**
      * Konstruktor der Klasse.
      * @param cities Die Namen und Anzahl der Knoten die erstellt werden müssen.
      * @param startCities alle Startknoten für die Kanten
      * @param destinationCities alle Zielknoten für die Kanten
      * @param km alle Distanzen für die Kanten
      * @param time alle Zeitabstände für die Kanten
+     * @throws GraphSyntaxException falls der Graph nicht zusammenhängend ist.
      */
-    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, int[] km, int[] time) throws GraphSyntaxException{
+    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, int[] km, int[] time) throws GraphSyntaxException {
         for (String city : cities) {
             this.vertices.add(new Vertex(city));
         }
@@ -92,19 +79,9 @@ public class MapGraph {
             throw new GraphSyntaxException("graph is not connected!");
     }
 
-    public void deepSearchRec(String v, String w) throws NoSuchEntryException {
-        if (getVertexByName(v) != null && getVertexByName(w) != null) {
-            DeepSearch.dfsRec(this, getVertexByName(v),
-                    getVertexByName(w), visited, parents);
-            parents.clear();
-            visited.clear();
-
-        }
-        else throw new NoSuchEntryException("at least one of the nodes does not exist!");
-    }
-
     /**
      * Überprüft ob der Graph zusammenhängend ist.
+     * @param root Beliebige Pseudowurzel im Graphen, schließlich muss von überall ein Pfad existieren.
      * @return true wenn ja, fehler wenn nein
      */
     public boolean isConnected(Vertex root) {
@@ -136,6 +113,7 @@ public class MapGraph {
         }
         else throw new NoSuchEntryException("at least one of the nodes does not exist!");
     }
+
     /**
      * methode um alle Knoten auszugeben.
      */
@@ -163,7 +141,7 @@ public class MapGraph {
      * Der Info-Befehl. Gibt der Reihe nach alle Knoten und dann alle Kanten aus.
      */
     public void info() {
-        if (this.world.isEmpty())
+        if (this.vertices.isEmpty())
             Terminal.printLine("");
         else {
             for (Vertex element : this.vertices)
@@ -174,7 +152,6 @@ public class MapGraph {
             }
         }
     }
-
 
     /**
      *  Gibt den Knoten der zu einem Namen gehört aus.
@@ -196,15 +173,6 @@ public class MapGraph {
         }
         return null;
     }
-
-    /**
-     *
-     * @return die Welt mit allen Städten und Verbindungen.
-     */
-    public HashMap<Vertex, ArrayList<Edge>> getWorld() {
-        return world;
-    }
-
 
     /**
      * Methode um dem Graphen Kanten hinzuzufügen
@@ -234,8 +202,6 @@ public class MapGraph {
             else
                 throw new InvalidOperationException("There is already an edge.");
         }
-
-
         else if ((this.vertices.contains(getVertexByName(v))
                 && !this.vertices.contains(getVertexByName(w)))
                 || this.vertices.contains(getVertexByName(w))
@@ -308,8 +274,5 @@ public class MapGraph {
         } catch (GraphSyntaxException e) {
             Terminal.printLine("Error, " + e.getMessage());
         }
-    }
-    public HashSet<Vertex> getVertices() {
-        return vertices;
     }
 }

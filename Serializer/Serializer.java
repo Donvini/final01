@@ -2,7 +2,6 @@ package navi.serializer;
 
 import navi.exceptions.FileSyntaxException;
 import navi.exceptions.GraphSyntaxException;
-import navi.exceptions.NoSuchEntryException;
 import navi.graph.MapGraph;
 import navi.graph.Vertex;
 

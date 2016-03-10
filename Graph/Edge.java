@@ -44,10 +44,18 @@ public class Edge {
         return endNode;
     }
 
+    /**
+     *
+     * @return km Wert der Kante
+     */
     public int getDistance() {
         return distance;
     }
 
+    /**
+     *
+     * @return zeit Wert der Kante
+     */
     public int getTime() {
         return time;
     }

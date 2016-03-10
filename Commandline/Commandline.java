@@ -40,7 +40,7 @@ public final class Commandline {
      * Hauptmethode der Klasse um die Nutzereingaben entgegenzunehmen
      * @param graph auf diesem Graph sollen alle operationen ausfgeführt werden
      */
-    public static void navigationUp(MapGraph graph) throws GraphSyntaxException {
+    public static void navigationUp(MapGraph graph) {
         while (true) {
            try {
                String commands = Terminal.readLine().toLowerCase();
