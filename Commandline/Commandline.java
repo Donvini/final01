@@ -1,5 +1,6 @@
 package navi.commandline;
 
+import navi.exceptions.GraphSyntaxException;
 import navi.exceptions.InvalidOperationException;
 import navi.exceptions.NoSuchEntryException;
 import navi.exceptions.UserInputException;
@@ -39,7 +40,7 @@ public final class Commandline {
      * Hauptmethode der Klasse um die Nutzereingaben entgegenzunehmen
      * @param graph auf diesem Graph sollen alle operationen ausfgeführt werden
      */
-    public static void navigationUp(MapGraph graph)  {
+    public static void navigationUp(MapGraph graph) throws GraphSyntaxException {
         while (true) {
            try {
                String commands = Terminal.readLine().toLowerCase();

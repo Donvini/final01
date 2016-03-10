@@ -44,6 +44,14 @@ public class Edge {
         return endNode;
     }
 
+    public int getDistance() {
+        return distance;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
     /**
      *
      * @return eine Kante mit der ursprünglichen Regex spezifikation.

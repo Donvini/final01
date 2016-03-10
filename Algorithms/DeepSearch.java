@@ -1,5 +1,8 @@
 package navi.algorithms;
 
+import navi.exceptions.GraphSyntaxException;
+import navi.exceptions.NoSuchEntryException;
+import navi.exceptions.UserInputException;
 import navi.graph.MapGraph;
 import navi.graph.Vertex;
 
@@ -80,23 +83,23 @@ public final class DeepSearch {
      * @return Alle möglichen Pfade.
      */
     public static ArrayList<ArrayList<Vertex>> dfsAll(MapGraph g, ArrayList<Vertex> route, Vertex start, Vertex goal) {
-       Vertex curr =  g.getVertexByName(start.getName());
-        route.add(curr);
-        ArrayList<ArrayList<Vertex>> path = new ArrayList<>();
+            Vertex curr = g.getVertexByName(start.getName());
+            route.add(curr);
+            ArrayList<ArrayList<Vertex>> path = new ArrayList<>();
 
-        if (curr.equals(g.getVertexByName(goal.getName()))) {
-            path.add(route);
+            if (curr.equals(g.getVertexByName(goal.getName()))) {
+                path.add(route);
+                return path;
+            }
+            for (Vertex n :
+                    curr.getNeighbours()) {
+                if (!route.contains(n)) {
+                    ArrayList<Vertex> newRoute = new ArrayList<>();
+                    newRoute.addAll(route);
+                    path.addAll(dfsAll(g, newRoute, n, goal));
+                }
+
+            }
             return path;
         }
-        for (Vertex n :
-                curr.getNeighbours()) {
-            if (!route.contains(n)) {
-                ArrayList<Vertex> newRoute = new ArrayList<>();
-                newRoute.addAll(route);
-                path.addAll(dfsAll(g, newRoute, n, goal));
-            }
-
-        }
-        return path;
-    }
 }

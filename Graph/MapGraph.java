@@ -15,6 +15,7 @@ import java.util.HashSet;
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
+
 public class MapGraph {
 
     /**
@@ -50,7 +51,7 @@ public class MapGraph {
      * @param km alle Distanzen für die Kanten
      * @param time alle Zeitabstände für die Kanten
      */
-    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, int[] km, int[] time) throws GraphSyntaxException {
+    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, int[] km, int[] time) throws GraphSyntaxException{
         for (String city : cities) {
             this.vertices.add(new Vertex(city));
         }
@@ -105,13 +106,12 @@ public class MapGraph {
     /**
      * Überprüft ob der Graph zusammenhängend ist.
      * @return true wenn ja, fehler wenn nein
-     * @throws GraphSyntaxException wenn der Graph nicht zusammenhängend ist
      */
-    public boolean isConnected(Vertex root) throws GraphSyntaxException {
+    public boolean isConnected(Vertex root) {
         ArrayList<Vertex> route = new ArrayList<>();
         for (Vertex element : vertices) {
             if (DeepSearch.dfsAll(this, route, root, element).size() == 0)
-            throw new GraphSyntaxException("graph is not connected!");
+            return false;
         }
         return true;
     }
@@ -267,24 +267,49 @@ public class MapGraph {
      * @param v Stadt 1
      * @param w Stadt 2
      * @throws NoSuchEntryException falls die gesuchte Verbindung nicht existiert.
+     * @throws InvalidOperationException wegen insert.
      */
-    public void remove(String v, String w) throws NoSuchEntryException {
-        if ((getVertexByName(v) != null
-                && getVertexByName(w) != null)
-                && getEdgeByVertices(new Vertex(v), new Vertex(w)) != null) {
-            this.edges.remove(getEdgeByVertices(getVertexByName(v), getVertexByName(w)));
-            this.edges.remove(getEdgeByVertices(getVertexByName(w), getVertexByName(v)));
-            getVertexByName(v).getNeighbours().remove(getVertexByName(w));
-            getVertexByName(w).getNeighbours().remove(getVertexByName(v));
-            getVertexByName(v).getEdges().remove(getEdgeByVertices(getVertexByName(v), getVertexByName(w)));
-            getVertexByName(w).getEdges().remove(getEdgeByVertices(getVertexByName(w), getVertexByName(v)));
-            if (getVertexByName(v).getNeighbours().isEmpty())
-                this.vertices.remove(getVertexByName(v));
-            if (getVertexByName(w).getNeighbours().isEmpty())
-                this.vertices.remove(getVertexByName(w));
-            Terminal.printLine("OK");
+    public void remove(String v, String w) throws NoSuchEntryException, InvalidOperationException {
+        try {
+            if ((getVertexByName(v) != null
+                    && getVertexByName(w) != null)
+                    && getEdgeByVertices(getVertexByName(v), getVertexByName(w)) != null) {
+                int timeBackup = getEdgeByVertices(getVertexByName(v), getVertexByName(w)).getTime();
+                int distBackup = getEdgeByVertices(getVertexByName(v), getVertexByName(w)).getDistance();
+                this.edges.remove(getEdgeByVertices(getVertexByName(v), getVertexByName(w)));
+                this.edges.remove(getEdgeByVertices(getVertexByName(w), getVertexByName(v)));
+                getVertexByName(v).getNeighbours().remove(getVertexByName(w));
+                getVertexByName(w).getNeighbours().remove(getVertexByName(v));
+                getVertexByName(v).getEdges().remove(getEdgeByVertices(getVertexByName(v), getVertexByName(w)));
+                getVertexByName(w).getEdges().remove(getEdgeByVertices(getVertexByName(w), getVertexByName(v)));
+
+                if (!isConnected(getVertexByName(v)) && !getVertexByName(v).getNeighbours().isEmpty()
+                        && !getVertexByName(w).getNeighbours().isEmpty()) {
+                    getVertexByName(v).getEdges().add(new Edge(getVertexByName(v), getVertexByName(w),
+                            distBackup, timeBackup));
+                    getVertexByName(w).getEdges().add(new Edge(getVertexByName(w), getVertexByName(v),
+                            distBackup, timeBackup));
+                    getVertexByName(v).getNeighbours().add(getVertexByName(w));
+                    getVertexByName(w).getNeighbours().add(getVertexByName(v));
+                    this.edges.add(new Edge(getVertexByName(v), getVertexByName(w),
+                            distBackup, timeBackup));
+                    new Edge(getVertexByName(w), getVertexByName(v),
+                            distBackup, timeBackup);
+                    throw new GraphSyntaxException("graph would not be connected anymore.");
+                }
+                if (getVertexByName(v).getNeighbours().isEmpty())
+                    this.vertices.remove(getVertexByName(v));
+                if (getVertexByName(w).getNeighbours().isEmpty())
+                    this.vertices.remove(getVertexByName(w));
+                Terminal.printLine("OK");
+            }
+            else
+                throw new NoSuchEntryException("There is no connection or one of the nodes does not exist.");
+        } catch (GraphSyntaxException e) {
+            Terminal.printLine("Error, " + e.getMessage());
         }
-        else
-            throw new NoSuchEntryException("There is no connection or one of the nodes does not exist.");
+    }
+    public HashSet<Vertex> getVertices() {
+        return vertices;
     }
 }
