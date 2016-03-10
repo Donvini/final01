@@ -50,7 +50,7 @@ public class MapGraph {
      * @param km alle Distanzen für die Kanten
      * @param time alle Zeitabstände für die Kanten
      */
-    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, int[] km, int[] time) {
+    public MapGraph(String[] cities, Vertex[] startCities, Vertex[] destinationCities, int[] km, int[] time) throws GraphSyntaxException {
         for (String city : cities) {
             this.vertices.add(new Vertex(city));
         }
@@ -87,7 +87,8 @@ public class MapGraph {
             }
             this.world.put(element, element.getEdges());
         }
-
+        if (!isConnected(startCities[0]))
+            throw new GraphSyntaxException("graph is not connected!");
     }
 
     public void deepSearchRec(String v, String w) throws NoSuchEntryException {
@@ -106,13 +107,13 @@ public class MapGraph {
      * @return true wenn ja, fehler wenn nein
      * @throws GraphSyntaxException wenn der Graph nicht zusammenhängend ist
      */
-    public boolean isConnected() throws GraphSyntaxException {
-        HashSet<Vertex> visited = new HashSet<>();
-        HashMap<Vertex, Vertex> parents = new HashMap<>();
-
-
+    public boolean isConnected(Vertex root) throws GraphSyntaxException {
+        ArrayList<Vertex> route = new ArrayList<>();
+        for (Vertex element : vertices) {
+            if (DeepSearch.dfsAll(this, route, root, element).size() == 0)
+            throw new GraphSyntaxException("graph is not connected!");
+        }
         return true;
-
     }
 
     /**
@@ -121,19 +122,16 @@ public class MapGraph {
      * @param w name des Endknoten
      * @throws NoSuchEntryException falls einer davon nicht existiert.
      */
-    public void searchAllPaths(String v, String w) throws NoSuchEntryException{
+    public void searchAllPaths(String v, String w) throws NoSuchEntryException {
         if (getVertexByName(v) != null && getVertexByName(w) != null) {
             ArrayList<Vertex> route = new ArrayList<>();
             ArrayList<ArrayList<Vertex>> path = DeepSearch.dfsAll(this, route, getVertexByName(v), getVertexByName(w));
-            for (ArrayList<Vertex> partList :
-                    path) {
-                StringBuilder output = new StringBuilder();
-
-                for (Vertex element :
-                        partList) {
-                    output.append(element.getName() + " ");
+            for (ArrayList<Vertex> partList : path) {
+                String output = "";
+                for (Vertex element : partList) {
+                    output += (element.getName() + " ");
                 }
-                Terminal.printLine(output.toString());
+                Terminal.printLine(output);
             }
         }
         else throw new NoSuchEntryException("at least one of the nodes does not exist!");

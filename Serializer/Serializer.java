@@ -187,7 +187,7 @@ public final class Serializer {
      * @param worldmap Die Textdatei, in der die Infos über den Graphen gespeichert sind
      * @return  Der Graph der mit den Klassenatributen von Serializer gebaut wird
      */
-    public static MapGraph initializeGraph(String[] worldmap) {
+    public static MapGraph initializeGraph(String[] worldmap) throws GraphSyntaxException{
         return new MapGraph(cities, startVertices(startCities),
                 destinationVertices(destinationCities), distance, time);
     }
