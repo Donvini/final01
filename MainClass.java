@@ -1,11 +1,11 @@
-package navi;
+package edu.kit.informatik;
 
-import navi.commandline.Commandline;
-import navi.commandline.Terminal;
-import navi.exceptions.FileSyntaxException;
-import navi.exceptions.GraphSyntaxException;
-import navi.serializer.FileInputHelper;
-import navi.serializer.Serializer;
+import edu.kit.informatik.commandline.Terminal;
+import edu.kit.informatik.serializer.Serializer;
+import edu.kit.informatik.commandline.Commandline;
+import edu.kit.informatik.exceptions.FileSyntaxException;
+import edu.kit.informatik.exceptions.GraphSyntaxException;
+import edu.kit.informatik.serializer.FileInputHelper;
 
 /**
  * @author Vincenzo Pace | KIT

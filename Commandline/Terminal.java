@@ -1,4 +1,4 @@
-package navi.commandline;
+package edu.kit.informatik.commandline;
 
 import java.io.BufferedReader;
 import java.io.IOException;

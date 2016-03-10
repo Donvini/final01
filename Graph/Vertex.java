@@ -1,4 +1,4 @@
-package navi.graph;
+package edu.kit.informatik.graph;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -9,13 +9,15 @@ import java.util.LinkedList;
  * @author Vincenzo Pace | KIT
  * @version 1.0
  */
-public class Vertex {
+public class Vertex implements Comparable {
 
     // name um Stadt zu identifizieren
     private String name;
 
-    // bool für Tiefensuche
+    // bool für Dijkstra
     private boolean isVisited;
+    private int distance;
+    private Vertex prev;
 
 
     private ArrayList<Edge> edges = new ArrayList<>();
@@ -27,7 +29,26 @@ public class Vertex {
      */
     public Vertex(String name) {
         this.name = name;
+        this.isVisited = false;
+        this.distance = 0;
     }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public Vertex getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Vertex prev) {
+        this.prev = prev;
+    }
+
     /**
      * Methode um alle Kanten eines Knotens zu erhalten
      * @return alle Kanten des Knoten
@@ -83,5 +104,11 @@ public class Vertex {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Vertex vertex = (Vertex) o;
+        return Integer.compare(this.getDistance(), vertex.getDistance());
     }
 }

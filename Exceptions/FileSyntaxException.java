@@ -1,4 +1,4 @@
-package navi.exceptions;
+package edu.kit.informatik.exceptions;
 
 import java.io.IOException;
 

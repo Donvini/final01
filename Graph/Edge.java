@@ -1,4 +1,4 @@
-package navi.graph;
+package edu.kit.informatik.graph;
 
 /**
  * @author Vincenzo Pace | KIT

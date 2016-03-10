@@ -1,10 +1,10 @@
-package navi.graph;
+package edu.kit.informatik.graph;
 
-import navi.algorithms.DeepSearch;
-import navi.commandline.Terminal;
-import navi.exceptions.GraphSyntaxException;
-import navi.exceptions.InvalidOperationException;
-import navi.exceptions.NoSuchEntryException;
+import edu.kit.informatik.algorithms.DeepSearch;
+import edu.kit.informatik.commandline.Terminal;
+import edu.kit.informatik.exceptions.GraphSyntaxException;
+import edu.kit.informatik.exceptions.InvalidOperationException;
+import edu.kit.informatik.exceptions.NoSuchEntryException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,6 +77,10 @@ public class MapGraph {
         }
         if (!isConnected(startCities[0]))
             throw new GraphSyntaxException("graph is not connected!");
+    }
+
+    public HashSet<Vertex> getVertices() {
+        return vertices;
     }
 
     /**
@@ -275,4 +279,5 @@ public class MapGraph {
             Terminal.printLine("Error, " + e.getMessage());
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package navi.exceptions;
+package edu.kit.informatik.exceptions;
 
 /**
  * @author Vincenzo Pace | KIT

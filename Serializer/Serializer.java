@@ -1,9 +1,9 @@
-package navi.serializer;
+package edu.kit.informatik.serializer;
 
-import navi.exceptions.FileSyntaxException;
-import navi.exceptions.GraphSyntaxException;
-import navi.graph.MapGraph;
-import navi.graph.Vertex;
+import edu.kit.informatik.graph.Vertex;
+import edu.kit.informatik.exceptions.FileSyntaxException;
+import edu.kit.informatik.exceptions.GraphSyntaxException;
+import edu.kit.informatik.graph.MapGraph;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -186,8 +186,9 @@ public final class Serializer {
      * zu generieren
      * @param worldmap Die Textdatei, in der die Infos über den Graphen gespeichert sind
      * @return  Der Graph der mit den Klassenatributen von Serializer gebaut wird
+     * @throws GraphSyntaxException falls der Graph nicht zusammenhängend ist.
      */
-    public static MapGraph initializeGraph(String[] worldmap) throws GraphSyntaxException{
+    public static MapGraph initializeGraph(String[] worldmap) throws GraphSyntaxException {
         return new MapGraph(cities, startVertices(startCities),
                 destinationVertices(destinationCities), distance, time);
     }

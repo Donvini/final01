@@ -1,10 +1,7 @@
-package navi.algorithms;
+package edu.kit.informatik.algorithms;
 
-import navi.exceptions.GraphSyntaxException;
-import navi.exceptions.NoSuchEntryException;
-import navi.exceptions.UserInputException;
-import navi.graph.MapGraph;
-import navi.graph.Vertex;
+import edu.kit.informatik.graph.Vertex;
+import edu.kit.informatik.graph.MapGraph;
 
 import java.util.*;
 
@@ -63,8 +60,7 @@ public final class DeepSearch {
          System.out.println(parents.values());
             return;
         }
-        for (Vertex n :
-                curr.getNeighbours()) {
+        for (Vertex n : curr.getNeighbours()) {
             if (!visited.contains(n)) {
                 visited.add(n);
                 parents.put(curr, n);
@@ -91,8 +87,7 @@ public final class DeepSearch {
                 path.add(route);
                 return path;
             }
-            for (Vertex n :
-                    curr.getNeighbours()) {
+            for (Vertex n : curr.getNeighbours()) {
                 if (!route.contains(n)) {
                     ArrayList<Vertex> newRoute = new ArrayList<>();
                     newRoute.addAll(route);

@@ -1,7 +1,7 @@
-package navi.serializer;
+package edu.kit.informatik.serializer;
 
 
-import navi.commandline.Terminal;
+import edu.kit.informatik.commandline.Terminal;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
