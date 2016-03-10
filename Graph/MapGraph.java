@@ -2,6 +2,7 @@ package navi.graph;
 
 import navi.algorithms.DeepSearch;
 import navi.commandline.Terminal;
+import navi.exceptions.GraphSyntaxException;
 import navi.exceptions.InvalidOperationException;
 import navi.exceptions.NoSuchEntryException;
 
@@ -54,23 +55,29 @@ public class MapGraph {
             this.vertices.add(new Vertex(city));
         }
         for (int i = 0; i < km.length; i++) {
-            this.edges.add(new Edge(startCities[i], destinationCities[i], km[i], time[i]));
-            this.edges.add(new Edge(destinationCities[i], startCities[i], km[i], time[i]));
+            this.edges.add(new Edge(getVertexByName(startCities[i].getName()),
+                    getVertexByName(destinationCities[i].getName()), km[i], time[i]));
+            this.edges.add(new Edge(getVertexByName(destinationCities[i].getName())
+                    , getVertexByName(startCities[i].getName()), km[i], time[i]));
         }
         for (Vertex element : vertices) {
             for (int j = 0; j <= vertices.size(); j++) {
                 try {
                     if (startCities[j].getName().equals(element.getName())) {
-                        element.getEdges().add(new Edge(startCities[j], destinationCities[j],
+                        element.getEdges().add(new Edge(getVertexByName(startCities[j].getName())
+                                , getVertexByName(destinationCities[j].getName()),
                                 km[j], time[j]));
-                        element.getEdges().add(new Edge(destinationCities[j], startCities[j],
+                        element.getEdges().add(new Edge(getVertexByName(destinationCities[j].getName())
+                                , getVertexByName(startCities[j].getName()),
                                 km[j], time[j]));
                         element.getNeighbours().add(getVertexByName(destinationCities[j].getName()));
                     }
                     else if (destinationCities[j].getName().equals(element.getName())) {
-                        element.getEdges().add(new Edge(destinationCities[j], startCities[j],
+                        element.getEdges().add(new Edge(getVertexByName(destinationCities[j].getName())
+                                , getVertexByName(startCities[j].getName()),
                                 km[j], time[j]));
-                        element.getEdges().add(new Edge(startCities[j], destinationCities[j],
+                        element.getEdges().add(new Edge(getVertexByName(startCities[j].getName())
+                                , getVertexByName(destinationCities[j].getName()),
                                 km[j], time[j]));
                         element.getNeighbours().add(getVertexByName(startCities[j].getName()));
                     }
@@ -83,9 +90,9 @@ public class MapGraph {
 
     }
 
-    public void deepSearchRec(MapGraph g, String v, String w) throws NoSuchEntryException {
+    public void deepSearchRec(String v, String w) throws NoSuchEntryException {
         if (getVertexByName(v) != null && getVertexByName(w) != null) {
-            DeepSearch.dfsRec(g, getVertexByName(v),
+            DeepSearch.dfsRec(this, getVertexByName(v),
                     getVertexByName(w), visited, parents);
             parents.clear();
             visited.clear();
@@ -93,7 +100,13 @@ public class MapGraph {
         }
         else throw new NoSuchEntryException("at least one of the nodes does not exist!");
     }
-    public boolean isConnected() throws NoSuchEntryException {
+
+    /**
+     * Überprüft ob der Graph zusammenhängend ist.
+     * @return true wenn ja, fehler wenn nein
+     * @throws GraphSyntaxException wenn der Graph nicht zusammenhängend ist
+     */
+    public boolean isConnected() throws GraphSyntaxException {
         HashSet<Vertex> visited = new HashSet<>();
         HashMap<Vertex, Vertex> parents = new HashMap<>();
 
@@ -102,10 +115,16 @@ public class MapGraph {
 
     }
 
-    public void searchAllPaths(MapGraph g, String v, String w) throws NoSuchEntryException{
+    /**
+     * Sucht den Graphen nach allen Verbindungen zwischen zwei Städten ab
+     * @param v Name des Startknoten
+     * @param w name des Endknoten
+     * @throws NoSuchEntryException falls einer davon nicht existiert.
+     */
+    public void searchAllPaths(String v, String w) throws NoSuchEntryException{
         if (getVertexByName(v) != null && getVertexByName(w) != null) {
             ArrayList<Vertex> route = new ArrayList<>();
-            ArrayList<ArrayList<Vertex>> path = DeepSearch.dfsAll(g, route, getVertexByName(v), getVertexByName(w));
+            ArrayList<ArrayList<Vertex>> path = DeepSearch.dfsAll(this, route, getVertexByName(v), getVertexByName(w));
             for (ArrayList<Vertex> partList :
                     path) {
                 StringBuilder output = new StringBuilder();
@@ -125,7 +144,6 @@ public class MapGraph {
     public void vertices() {
         for (Vertex element : this.vertices) {
             Terminal.printLine(element.toString());
-            System.out.println("Nachbar:" + element.getNeighbours().getFirst().getNeighbours().getFirst());
         }
     }
 
@@ -256,12 +274,12 @@ public class MapGraph {
         if ((getVertexByName(v) != null
                 && getVertexByName(w) != null)
                 && getEdgeByVertices(new Vertex(v), new Vertex(w)) != null) {
-            this.edges.remove(getEdgeByVertices(new Vertex(v), new Vertex(w)));
-            this.edges.remove(getEdgeByVertices(new Vertex(w), new Vertex(v)));
+            this.edges.remove(getEdgeByVertices(getVertexByName(v), getVertexByName(w)));
+            this.edges.remove(getEdgeByVertices(getVertexByName(w), getVertexByName(v)));
             getVertexByName(v).getNeighbours().remove(getVertexByName(w));
             getVertexByName(w).getNeighbours().remove(getVertexByName(v));
-            getVertexByName(v).getEdges().remove(getEdgeByVertices(new Vertex(v), new Vertex(w)));
-            getVertexByName(w).getEdges().remove(getEdgeByVertices(new Vertex(w), new Vertex(v)));
+            getVertexByName(v).getEdges().remove(getEdgeByVertices(getVertexByName(v), getVertexByName(w)));
+            getVertexByName(w).getEdges().remove(getEdgeByVertices(getVertexByName(w), getVertexByName(v)));
             if (getVertexByName(v).getNeighbours().isEmpty())
                 this.vertices.remove(getVertexByName(v));
             if (getVertexByName(w).getNeighbours().isEmpty())
