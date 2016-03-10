@@ -44,6 +44,9 @@ public class Vertex {
         return neighbours;
     }
 
+    public void setVisited(boolean visited) {
+        isVisited = visited;
+    }
 
     /**
      *

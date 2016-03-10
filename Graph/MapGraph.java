@@ -83,16 +83,35 @@ public class MapGraph {
 
     }
 
-    public void deepSearch(String v, String w) throws NoSuchEntryException {
+    public void deepSearchRec(String v, String w) throws NoSuchEntryException {
         if (getVertexByName(v) != null && getVertexByName(w) != null) {
-            HashMap<Vertex, Vertex> path = DeepSearch.dfsRec(getVertexByName(v),
+            DeepSearch.dfsRec(getVertexByName(v),
                     getVertexByName(w), visited, parents);
-            Terminal.printLine(path.keySet().toString());
             parents.clear();
             visited.clear();
 
         }
         else throw new NoSuchEntryException("at least one of the nodes does not exist!");
+    }
+    public boolean isConnected() throws NoSuchEntryException {
+        HashSet<Vertex> visited = new HashSet<>();
+        HashMap<Vertex, Vertex> parents = new HashMap<>();
+
+
+        return true;
+
+    }
+
+    public void deepNiko(String v, String w) {
+        ArrayList<Vertex> route = new ArrayList<>();
+        ArrayList<ArrayList<Vertex>> path = DeepSearch.dfsNiko(route, getVertexByName(v), getVertexByName(w));
+        for (ArrayList<Vertex> element : path
+             ) {
+            for (Vertex pe :
+                    element) {
+                Terminal.printLine(pe.toString());
+            }
+        }
     }
     /**
      * methode um alle Knoten auszugeben.
@@ -139,7 +158,7 @@ public class MapGraph {
      * @param name Der Name des gesuchten Knoten
      * @return liefert den entsprechenden Knoten
      */
-    private Vertex getVertexByName(String name) {
+    public Vertex getVertexByName(String name) {
         for (Vertex vertex : this.vertices) {
             if (vertex.getName().equalsIgnoreCase(name))
                 return vertex;

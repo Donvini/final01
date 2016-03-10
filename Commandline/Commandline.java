@@ -27,6 +27,9 @@ public final class Commandline {
     private static final String OPTIMAL = "optimal";
     private static final String ALL = "all";
 
+
+
+
     /**
      * Privater Konstruktor um Instantiierung zu verhindern.
      */
@@ -67,7 +70,7 @@ public final class Commandline {
                            case OPTIMAL:
                                break;
                            case ALL:
-                               graph.deepSearch(routeParts[0], routeParts[1]);
+                               graph.deepNiko(routeParts[0], routeParts[1]);
                                break;
                            default:
                                throw new UserInputException("route expects one of the 4 criterions: "
