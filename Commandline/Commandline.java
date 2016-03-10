@@ -70,7 +70,7 @@ public final class Commandline {
                            case OPTIMAL:
                                break;
                            case ALL:
-                               graph.deepNiko(routeParts[0], routeParts[1]);
+                               graph.searchAllPaths(graph, routeParts[0], routeParts[1]);
                                break;
                            default:
                                throw new UserInputException("route expects one of the 4 criterions: "

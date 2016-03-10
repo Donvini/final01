@@ -1,7 +1,5 @@
 package navi.algorithms;
 
-import navi.commandline.Terminal;
-import navi.graph.Edge;
 import navi.graph.MapGraph;
 import navi.graph.Vertex;
 
@@ -55,53 +53,47 @@ public final class DeepSearch {
      * @param parents
      * @return
      */
-    public static void dfsRec(Vertex s, Vertex g, HashSet<Vertex> visited, HashMap<Vertex, Vertex> parents) {
-        visited.add(s);
-        if (s.equals(g)) {
-            Terminal.printLine(parents.keySet().toString());
+    public static void dfsRec(MapGraph graph, Vertex s, Vertex g, HashSet<Vertex> visited, HashMap<Vertex, Vertex> parents) {
+        Vertex curr = graph.getVertexByName(s.getName());
+        visited.add(curr);
+        if (curr.equals(g)) {
+         System.out.println(parents.values());
             return;
         }
         for (Vertex n :
-                s.getNeighbours()) {
+                curr.getNeighbours()) {
             if (!visited.contains(n)) {
                 visited.add(n);
-                parents.put(s, n);
-                dfsRec(n, g, visited, parents);
+                parents.put(curr, n);
+                dfsRec(graph, n, g, visited, parents);
             }
         }
     }
 
-    public static ArrayList<Vertex> dfsWiki(MapGraph g, Vertex v) {
-        HashSet<Vertex> visited = new HashSet<>();
-        visited.add(v);
-        for (Vertex n :
-                v.getNeighbours()) {
-            if (!visited.contains(n))
-                return dfsWiki(g, n);
-        }
-        return null;
-    }
 
-
-    public static ArrayList<ArrayList<Vertex>> dfsNiko(ArrayList<Vertex> route, Vertex start, Vertex goal) {
-        route.add(start);
+    /**
+     * Liefert alle Pfade zwischen zwei Städten
+     * @param g der Graph auf dem sich alles abspielt
+     * @param route die Route in die gespeichert wird
+     * @param start Startstadt
+     * @param goal Zielstadt
+     * @return Alle möglichen Pfade.
+     */
+    public static ArrayList<ArrayList<Vertex>> dfsAll(MapGraph g, ArrayList<Vertex> route, Vertex start, Vertex goal) {
+       Vertex curr =  g.getVertexByName(start.getName());
+        route.add(curr);
         ArrayList<ArrayList<Vertex>> path = new ArrayList<>();
-        System.out.println("aktueller Knoten: " + start);
-        System.out.println("aktuelle Route: " + route);
-        System.out.println("Aktueller Pfad: " + path);
-        if (start.equals(goal)) {
+
+        if (curr.equals(g.getVertexByName(goal.getName()))) {
             path.add(route);
             return path;
         }
-        System.out.println(start.getNeighbours());
         for (Vertex n :
-                start.getNeighbours()) {
+                curr.getNeighbours()) {
             if (!route.contains(n)) {
                 ArrayList<Vertex> newRoute = new ArrayList<>();
                 newRoute.addAll(route);
-                System.out.println("Neuer Knoten: " + n);
-                System.out.println("Neue Route" + newRoute);
-                path.addAll(dfsNiko(newRoute, n, goal));
+                path.addAll(dfsAll(g, newRoute, n, goal));
             }
 
         }

@@ -65,14 +65,14 @@ public class MapGraph {
                                 km[j], time[j]));
                         element.getEdges().add(new Edge(destinationCities[j], startCities[j],
                                 km[j], time[j]));
-                        element.getNeighbours().add(destinationCities[j]);
+                        element.getNeighbours().add(getVertexByName(destinationCities[j].getName()));
                     }
                     else if (destinationCities[j].getName().equals(element.getName())) {
                         element.getEdges().add(new Edge(destinationCities[j], startCities[j],
                                 km[j], time[j]));
                         element.getEdges().add(new Edge(startCities[j], destinationCities[j],
                                 km[j], time[j]));
-                        element.getNeighbours().add(startCities[j]);
+                        element.getNeighbours().add(getVertexByName(startCities[j].getName()));
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
                     break;
@@ -83,9 +83,9 @@ public class MapGraph {
 
     }
 
-    public void deepSearchRec(String v, String w) throws NoSuchEntryException {
+    public void deepSearchRec(MapGraph g, String v, String w) throws NoSuchEntryException {
         if (getVertexByName(v) != null && getVertexByName(w) != null) {
-            DeepSearch.dfsRec(getVertexByName(v),
+            DeepSearch.dfsRec(g, getVertexByName(v),
                     getVertexByName(w), visited, parents);
             parents.clear();
             visited.clear();
@@ -102,16 +102,22 @@ public class MapGraph {
 
     }
 
-    public void deepNiko(String v, String w) {
-        ArrayList<Vertex> route = new ArrayList<>();
-        ArrayList<ArrayList<Vertex>> path = DeepSearch.dfsNiko(route, getVertexByName(v), getVertexByName(w));
-        for (ArrayList<Vertex> element : path
-             ) {
-            for (Vertex pe :
-                    element) {
-                Terminal.printLine(pe.toString());
+    public void searchAllPaths(MapGraph g, String v, String w) throws NoSuchEntryException{
+        if (getVertexByName(v) != null && getVertexByName(w) != null) {
+            ArrayList<Vertex> route = new ArrayList<>();
+            ArrayList<ArrayList<Vertex>> path = DeepSearch.dfsAll(g, route, getVertexByName(v), getVertexByName(w));
+            for (ArrayList<Vertex> partList :
+                    path) {
+                StringBuilder output = new StringBuilder();
+
+                for (Vertex element :
+                        partList) {
+                    output.append(element.getName() + " ");
+                }
+                Terminal.printLine(output.toString());
             }
         }
+        else throw new NoSuchEntryException("at least one of the nodes does not exist!");
     }
     /**
      * methode um alle Knoten auszugeben.
@@ -119,6 +125,7 @@ public class MapGraph {
     public void vertices() {
         for (Vertex element : this.vertices) {
             Terminal.printLine(element.toString());
+            System.out.println("Nachbar:" + element.getNeighbours().getFirst().getNeighbours().getFirst());
         }
     }
 
